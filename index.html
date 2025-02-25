@@ -1,1 +1,85 @@
-<html><body><h1>Welcome to AI vs HP</h1></body></html>
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Se hur väl avancerade AI-modeller presterar på högskoleprovet. Ett projekt av Ariel Ekgren.">
+    <meta name="keywords" content="AI, högskoleprovet, Sverige, utbildning, språkmodeller, Ariel Ekgren">
+    <meta name="author" content="Ariel Ekgren">
+    <meta property="og:title" content="AI skriver högskoleprovet | Ariel Ekgren">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ekgren.github.io/aiskolprov/">
+    <title>AI skriver högskoleprovet | Ariel Ekgren</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <link rel="canonical" href="https://ekgren.github.io/aiskolprov/">
+    <link rel="alternate" hreflang="sv" href="https://ekgren.github.io/aiskolprov/">
+    <link rel="alternate" hreflang="en" href="https://ekgren.github.io/aiskolprov/index-en.html">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>AI skolprov</h1>
+            <p class="attribution">AI skriver högskoleprovet, ett personligt projekt utvecklat av Ariel Ekgren</p>
+        </div>
+        <div class="language-switch">
+            <a href="index.html" class="lang-btn active" aria-label="Håll Svenska">Svenska</a>
+            <a href="index-en.html" class="lang-btn" aria-label="Byt till English">English</a>
+        </div>
+    </header>
+
+    <section class="intro">
+        <h2>Introduktion</h2>
+        <p>
+            På den här sidan ser du hur några av de mest avancerade AI modellerna (specifikt språkmodeller eller LLMer) klarar högskoleprovet. Utvecklingen går snabbt framåt och det kan vara svårt att bedömma hur bra dessa nya verktyg är för att lösa olika uppgifter. Att låta modellerna göra prover som till exempel högskoleprovet erbjuder ett konkret sätt att mäta modellernas kapacitet. Det är ett verktyg som både utvecklare, forskare och företag kan använda sig av för att utvärdera vad modellerna kan användas till.
+        </p>
+        <p>I tabellen nedan kan du se hur väl olika modeller presterar på den verbala delen på högskoleprovet som kom ut <a href="https://www.studera.nu/hogskoleprov/fpn/provfragor-och-facit-hosten-2024/">hösten 2024</a>. Modell syftar till vilken modell som använts för att skriva provet. Den totala poängen för den verbala delen på provet kan ses under poäng. Och den <a href="https://www.studera.nu/hogskoleprov/fpn/normeringstabeller-hosten-2024/">normerade poängen</a> under normerad.</p>
+    </section>
+
+    <section class="results">
+        <h2>Provresultat</h2>
+        <table id="benchmarkTable">
+            <thead>
+                <tr>
+                    <th data-sort="Model">Modell</th>
+                    <th data-sort="HP">Provtillfälle</th>
+                    <th data-sort="del">Del</th>
+                    <th data-sort="score">Poäng</th>
+                    <th data-sort="normed">Normerad</th>
+                    <th data-sort="test_date">Testdatum</th>
+                    <th data-sort="Organization">Organisation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </section>
+
+    <section class="links">
+        <h2>Resurser</h2>
+        <p>
+            <h3>Utforska hela datasetet och koden</h3>
+            <ul>
+                <li><a href="https://huggingface.co/Ekgren" target="_blank">Dataset på Hugging Face</a></li>
+                <li><a href="https://github.com/ekgren/aiskolprov" target="_blank">aiskolprov GitHub-repo</a></li>
+            </ul>
+        <h2>Kontakt</h2>
+            <p>Vid frågor, funderingar eller annat kan man nå mig på:</p>
+            <ul class="contacts">
+                <li>E-post: ariel [punkt] ekgren [snabel-a] gmail [punkt] com</li>
+                <li>Twitter: <a href="https://twitter.com/aryomo" target="_blank">@ArielEkgren</a></li>
+                <li>LinkedIn: <a href="https://www.linkedin.com/in/ariel-ekgren/" target="_blank">Ariel Ekgren</a></li>
+            </ul>
+            Eller kolla in min personliga sida på <a href="https://ekgren.github.io" target="_blank">ekgren.github.io</a>.
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2025 Ariel Ekgren.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
