@@ -8,11 +8,11 @@ body {
 }
 
 header {
-    background: linear-gradient(45deg, #007bff, #0056b3);
+    background: linear-gradient(45deg, #005b9f, #0077cc);
     color: white;
     text-align: center;
     padding: 2rem 1rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     position: relative;
 }
 
@@ -24,12 +24,13 @@ header h1 {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     font-size: 2.5rem;
+    letter-spacing: -0.02em;
 }
 
 .attribution {
     font-size: 0.9rem;
     margin: 0.5rem 0 0;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .language-switch {
@@ -41,48 +42,63 @@ header h1 {
 }
 
 .lang-btn {
-    background-color: #007bff;
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 0.4rem 0.8rem;
     margin: 0;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.8rem;
     text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .lang-btn.active {
-    background-color: #0056b3;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
     transform: scale(1.05);
 }
 
 .lang-btn:hover:not(.active) {
-    background-color: #0069d9;
+    background-color: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
 }
 
 .intro, .results, .links {
     max-width: 1200px;
     margin: 2rem auto;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
 }
 
 h2 {
     font-family: 'Montserrat', sans-serif;
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
+    color: #005b9f;
+    border-bottom: 2px solid #005b9f;
     padding-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: #005b9f;
+    margin-top: 1.5rem;
+}
+
+/* Table styles */
+.table-container {
+    overflow-x: auto;
+    max-height: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden;
 }
 
 th, td {
@@ -92,15 +108,17 @@ th, td {
 }
 
 th {
-    background-color: #007bff;
+    background-color: #005b9f;
     color: white;
     cursor: pointer;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 10;
     transition: background-color 0.3s ease;
 }
 
 th:hover {
-    background-color: #0056b3;
+    background-color: #004880;
 }
 
 th::after {
@@ -126,19 +144,41 @@ tr:nth-child(even) {
     background-color: #f8f9fa;
 }
 
-tr:hover {
-    background-color: #e9ecef;
-    transition: background-color 0.3s ease;
+tr {
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
 }
 
-a {
-    color: #007bff;
+tr:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+}
+
+/* Icon to indicate rows are clickable */
+tr::after {
+    content: '👁️';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+tr:hover::after {
+    opacity: 0.7;
+}
+
+td a {
+    color: #005b9f;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-a:hover {
-    color: #0056b3;
+td a:hover {
+    color: #004880;
     text-decoration: underline;
 }
 
@@ -153,46 +193,297 @@ a:hover {
 
 footer {
     text-align: center;
-    padding: 1rem;
-    background: linear-gradient(45deg, #0056b3, #007bff);
+    padding: 1.5rem;
+    background: linear-gradient(45deg, #004880, #005b9f);
     color: white;
     position: relative;
     width: 100%;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 3rem;
 }
 
+/* Detail view styles */
+.detail-view {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    animation: fadeIn 0.3s ease-out;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.detail-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #005b9f;
+}
+
+.detail-header h2 {
+    margin: 0 0 0 1.5rem;
+    border: none;
+    flex-grow: 1;
+    text-align: left;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+    text-shadow: none;
+}
+
+#backBtn {
+    background-color: #005b9f;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+#backBtn:hover {
+    background-color: #004880;
+}
+
+#backBtn::before {
+    content: "←";
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* CSV table styles */
+.csv-container {
+    overflow: auto;
+    max-height: 75vh;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 1px; /* Prevents margin collapse */
+    margin-top: 1.5rem; /* Add space between header and table */
+}
+
+.csv-table {
+    width: auto; /* Allow table to expand beyond container width */
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    table-layout: auto; /* Allow columns to size based on content */
+}
+
+.csv-table th {
+    background-color: #004880;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 0.7rem;
+    text-align: left; /* Uniform left alignment */
+    border: 1px solid #003860;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 250px; /* Fixed width columns */
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 2.5rem; /* Fixed height for headers */
+    vertical-align: middle; /* Center content vertically */
+    display: table-cell; /* Ensure proper vertical alignment */
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Consistent styling for header text */
+.header-text {
+    display: inline-block;
+    line-height: 1.2;
+    vertical-align: middle;
+}
+
+.csv-table td {
+    padding: 0.7rem;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    width: 250px; /* Fixed width columns */
+    height: 40px; /* Half the height */
+    max-height: 40px;
+    transition: background-color 0.2s ease;
+    position: relative;
+    cursor: pointer;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: normal; /* Allow wrapping within cell */
+    overflow-wrap: break-word;
+    display: table-cell; /* Ensure proper vertical sizing */
+    vertical-align: top;
+}
+
+/* Subtle indicator for double-click functionality */
+.csv-table td::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(0, 91, 159, 0.3);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.csv-table td:hover::after {
+    opacity: 1;
+}
+
+.csv-table tr:nth-child(even) {
+    background-color: #f0f5fa;
+}
+
+.csv-table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.csv-table tr:hover td {
+    background-color: #e3edf7;
+}
+
+/* Modal for showing full cell content */
+.cell-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell-modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.cell-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease;
+}
+
+.cell-modal-close:hover {
+    color: #000;
+}
+
+.cell-modal-title {
+    color: #005b9f;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.8rem;
+    margin-top: 0;
+    padding-right: 30px;
+}
+
+.cell-modal-body {
+    margin-top: 1rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1.5;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
+    
     th, td {
         font-size: 0.9rem;
         padding: 0.7rem;
     }
-    table {
-        font-size: 0.9rem;
-    }
+    
     .language-switch {
         top: 0.5rem;
         right: 0.5rem;
     }
+    
     .lang-btn {
         padding: 0.3rem 0.6rem;
         font-size: 0.7rem;
     }
-    th::after {
-        margin-left: 0.3rem;
-        border-left-width: 3px;
-        border-right-width: 3px;
+    
+    .intro, .results, .links, .detail-view {
+        padding: 0 1rem;
     }
 }
 
-/* Animations for a modern look */
+/* Loading indicator */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #005b9f;
+    font-size: 1.2rem;
+    position: relative;
+    padding-left: 40px;
+}
+
+.loading::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 91, 159, 0.2);
+    border-top-color: #005b9f;
+    animation: spin 1s linear infinite;
+}
+
+.error-message {
+    padding: 2rem;
+    text-align: center;
+    color: #e74c3c;
+    background-color: #fdf2f0;
+    border-radius: 8px;
+    border-left: 4px solid #e74c3c;
+    margin: 2rem 0;
+}
+
+/* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 .intro, .results, .links {
-    animation: fadeIn 1s ease-out;
+    animation: fadeIn 0.5s ease-out;
 }
