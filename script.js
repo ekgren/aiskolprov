@@ -1,28 +1,29 @@
 const data = [
-    { "Model": "GPT‑4o mini", "HP": "2024-10-20", "del": "VERB", "score": 71, "normed": 1.7, "test_date": "2025-02-18", "link": "", "Organization": "Open AI" },
-    { "Model": "GPT‑4o", "HP": "2024-10-20", "del": "VERB", "score": 77, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Open AI" },
-    { "Model": "GPT‑4.5 (preview)", "HP": "2024-10-20", "del": "VERB", "score": 78, "normed": 2.0, "test_date": "2025-03-04", "link": "", "Organization": "Open AI" },
+    { "Model": "GPT‑4o mini", "HP": "2024-10-20", "del": "VERB", "score": 71, "normed": 1.7, "test_date": "2025-02-18", "link": "", "Organization": "Open AI", "open_weights": "false"},
+    { "Model": "GPT‑4o", "HP": "2024-10-20", "del": "VERB", "score": 77, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Open AI", "open_weights": "false" },
+    { "Model": "GPT‑4.5 (preview)", "HP": "2024-10-20", "del": "VERB", "score": 78, "normed": 2.0, "test_date": "2025-03-04", "link": "", "Organization": "Open AI", "open_weights": "false" },
     
-    { "Model": "LLama 3.2 8b instruct", "HP": "2024-10-20", "del": "VERB", "score": 33, "normed": 0.5, "test_date": "2025-02-18", "link": "", "Organization": "Meta" },
-    { "Model": "LLama 3.3 70b instruct", "HP": "2024-10-20", "del": "VERB", "score": 77, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Meta" },
+    { "Model": "LLama 3.2 8b instruct", "HP": "2024-10-20", "del": "VERB", "score": 33, "normed": 0.5, "test_date": "2025-02-18", "link": "", "Organization": "Meta", "open_weights": "true" },
+    { "Model": "LLama 3.3 70b instruct", "HP": "2024-10-20", "del": "VERB", "score": 77, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Meta", "open_weights": "true" },
     
-    { "Model": "Claude 3.5 Haiku", "HP": "2024-10-20", "del": "VERB", "score": 72, "normed": 1.8, "test_date": "2025-02-18", "link": "https://openrouter.ai/anthropic/claude-3.5-haiku-20241022", "Organization": "Anthropic" },
-    { "Model": "Claude 3.5 Sonnet", "HP": "2024-10-20", "del": "VERB", "score": 77, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Anthropic" },
-    { "Model": "Claude 3.7 Sonnet", "HP": "2024-10-20", "del": "VERB", "score": 80, "normed": 2.0, "test_date": "2025-02-27", "link": "", "Organization": "Anthropic" },
+    { "Model": "Claude 3.5 Haiku", "HP": "2024-10-20", "del": "VERB", "score": 72, "normed": 1.8, "test_date": "2025-02-18", "link": "https://openrouter.ai/anthropic/claude-3.5-haiku-20241022", "Organization": "Anthropic", "open_weights": "false" },
+    { "Model": "Claude 3.5 Sonnet", "HP": "2024-10-20", "del": "VERB", "score": 77, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Anthropic", "open_weights": "false" },
+    { "Model": "Claude 3.7 Sonnet", "HP": "2024-10-20", "del": "VERB", "score": 80, "normed": 2.0, "test_date": "2025-02-27", "link": "", "Organization": "Anthropic", "open_weights": "false" },
     
-    { "Model": "Gemini 2.0 flash", "HP": "2024-10-20", "del": "VERB", "score": 76, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Google" },
+    { "Model": "Gemini 2.0 flash", "HP": "2024-10-20", "del": "VERB", "score": 76, "normed": 2.0, "test_date": "2025-02-18", "link": "", "Organization": "Google", "open_weights": "false" },
     
-    { "Model": "Grok-2-1212", "HP": "2024-10-20", "del": "VERB", "score": 76, "normed": 2.0, "test_date": "2025-02-18", "link": "https://openrouter.ai/x-ai/grok-2-1212", "Organization": "xAI" },
+    { "Model": "Grok-2-1212", "HP": "2024-10-20", "del": "VERB", "score": 76, "normed": 2.0, "test_date": "2025-02-18", "link": "https://openrouter.ai/x-ai/grok-2-1212", "Organization": "xAI", "open_weights": "false" },
     
-    { "Model": "DeepSeek-V3", "HP": "2024-10-20", "del": "VERB", "score": 75, "normed": 1.9, "test_date": "2025-02-18", "link": "", "Organization": "DeepSeek" },
-    { "Model": "DeepSeek-R1", "HP": "2024-10-20", "del": "VERB", "score": 73, "normed": 1.8, "test_date": "2025-02-18", "link": "", "Organization": "DeepSeek" },
+    { "Model": "DeepSeek-V3", "HP": "2024-10-20", "del": "VERB", "score": 75, "normed": 1.9, "test_date": "2025-02-18", "link": "", "Organization": "DeepSeek", "open_weights": "true" },
+    { "Model": "DeepSeek-R1", "HP": "2024-10-20", "del": "VERB", "score": 73, "normed": 1.8, "test_date": "2025-02-18", "link": "", "Organization": "DeepSeek", "open_weights": "true" },
 
-    { "Model": "Mistral Small 24b instruct", "HP": "2024-10-20", "del": "VERB", "score": 67, "normed": 1.5, "test_date": "2025-02-18", "link": "", "Organization": "Mistral" },
-    { "Model": "mistral-large-2411", "HP": "2024-10-20", "del": "VERB", "score": 73, "normed": 1.8, "test_date": "2025-02-18", "link": "", "Organization": "Mistral" },
+    { "Model": "Mistral Small 24b instruct", "HP": "2024-10-20", "del": "VERB", "score": 67, "normed": 1.5, "test_date": "2025-02-18", "link": "", "Organization": "Mistral", "open_weights": "true" },
+    { "Model": "mistral-large-2411", "HP": "2024-10-20", "del": "VERB", "score": 73, "normed": 1.8, "test_date": "2025-02-18", "link": "", "Organization": "Mistral", "open_weights": "true" },
     
-    { "Model": "qwen-max", "HP": "2024-10-20", "del": "VERB", "score": 68, "normed": 1.6, "test_date": "2025-02-18", "link": "https://openrouter.ai/qwen/qwen-max", "Organization": "Alibaba" },
+    { "Model": "Qwen-Max", "HP": "2024-10-20", "del": "VERB", "score": 68, "normed": 1.6, "test_date": "2025-02-18", "link": "https://openrouter.ai/qwen/qwen-max", "Organization": "Alibaba", "open_weights": "true" },
+    { "Model": "Qwen QwQ 32b", "HP": "2024-10-20", "del": "VERB", "score": 65, "normed": 1.5, "test_date": "2025-03-06", "link": "https://openrouter.ai/qwen/qwq-32b", "Organization": "Alibaba", "open_weights": "true" },
     
-    { "Model": "utter-project/EuroLLM-9B-Instruct", "HP": "2024-10-20", "del": "VERB", "score": 43, "normed": 0.8, "test_date": "2025-02-19", "link": "", "Organization": "Utter project" },
+    { "Model": "utter-project/EuroLLM-9B-Instruct", "HP": "2024-10-20", "del": "VERB", "score": 43, "normed": 0.8, "test_date": "2025-02-19", "link": "", "Organization": "Utter project", "open_weights": "true" },
 ];
 
 const orgs = {
@@ -59,7 +60,8 @@ const models = {
     "Mistral Small 24b instruct": "https://mistral.ai/news/mistral-small/",
     "mistral-large-2411": "https://mistral.ai/news/mistral-large-2411/",
     
-    "qwen-max": "https://qwenlm.github.io/blog/qwen-max/",
+    "Qwen-Max": "https://qwenlm.github.io/blog/qwen-max/",
+    "Qwen QwQ 32b": "https://qwenlm.github.io/blog/qwen-max/",
     
     "utter-project/EuroLLM-9B-Instruct": "https://he-utter.eu/news/eurollm-models-released/",
 }
@@ -86,7 +88,8 @@ const csvs = {
     "Mistral Small 24b instruct": "joined_results_mistral-small-24b-instruct-2501.csv",
     "mistral-large-2411": "joined_results_mistral-large-2411.csv",
     
-    "qwen-max": "joined_results_qwen-max.csv",
+    "Qwen-Max": "joined_results_qwen-max.csv",
+    "Qwen QwQ 32b": "joined_results_qwen-qwq-32b.csv",
     
     "utter-project/EuroLLM-9B-Instruct": "joined_results_utter-project_eurollm-9b-instruct.csv",
 }
