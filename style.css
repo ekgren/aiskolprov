@@ -20,7 +20,9 @@ body {
 }
 
 .table-wrap {
-    overflow: auto; /* responsive horizontal scroll if needed */
+    overflow-x: auto; /* horizontal scroll on small screens */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
 }
 
 .header-accent {
@@ -57,6 +59,7 @@ table {
     margin: 1em 0;
     font-size: 0.8rem; /* Consistent font size */
     table-layout: fixed;
+    min-width: 860px; /* keep column layout; scroll when viewport < 860px */
 }
 
 th, td {
