@@ -2,7 +2,14 @@
 
 # List of model names
 models=(
-    # "google/gemma-3n-e2b-it"
+    # "deepseek/deepseek-v3.1-base"
+    # "deepseek/deepseek-r1-0528"
+    "google/gemini-2.5-flash"
+    "x-ai/grok-3-mini"
+    "google/gemma-3n-e4b-it"
+    "microsoft/phi-4-reasoning-plus"
+    "meta-llama/llama-4-maverick"
+    "meta-llama/llama-3.3-70b-instruct"
     "moonshotai/kimi-k2"
     "openai/gpt-oss-20b"
     "openai/gpt-oss-120b"

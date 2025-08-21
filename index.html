@@ -1,34 +1,429 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Skolprov Results</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LLM Benchmark Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Results from a Swedish evaluation benchmark testing various LLMs on Swedish language tasks." />
 </head>
 <body>
-    <h1>AI Skolprov Results</h1>
     <div class="container">
-        <div class="filter-container">
-            <label for="test-filter">Filter by test:</label>
-            <select id="test-filter">
-                <option value="all">All</option>
-            </select>
+        <div class="header-accent"></div>
+        <h1>LLM Benchmark Results</h1>
+        <div class="intro">
+            <p>This page displays the results from a Swedish evaluation benchmark. The benchmark tests various LLMs on several Swedish tasks.</p>
         </div>
-        <table id="results-table">
-            <thead>
-                <tr>
-                    <th>Model Name</th>
-                    <th>Test</th>
-                    <th>Points</th>
-                    <th>Total</th>
-                    <th>Percentage</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="table-wrap">
+            <table id="results-table">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        <hr>
+        <div class="footer">
+            <p>The evaluation is available on <a href="https://huggingface.co/datasets/ekgren/swedish_skolprov" target="_blank" rel="noopener">Hugging Face</a>.</p>
+            <p>The tests</p>
+                <p>Högskoleprovet
+                   <br> <a href="https://www.studera.nu/hogskoleprov/forbered/tidigare-hogskoleprov/" target="_blank" rel="noopener">https://www.studera.nu/hogskoleprov/forbered/tidigare-hogskoleprov/</a></p>
+                <p>Matematik- och fysikprovet
+                   <br><a href="https://www.kth.se/mattefysik/matematik-och-fysikprovet/matematik-och-fysikprovet-1.1233988" target="_blank" rel="noopener">https://www.kth.se/mattefysik/matematik-och-fysikprovet/matematik-och-fysikprovet-1.1233988</a></p>
+                <p>Kunskapsprov läkare
+                   <br><a href="https://www.umu.se/utbildning/sok/kunskapsprov/kunskapsprov-for-lakare/" target="_blank" rel="noopener">https://www.umu.se/utbildning/sok/kunskapsprov/kunskapsprov-for-lakare/</a>
+                   <br><a href="https://www.umu.se/utbildning/sok/kunskapsprov/kunskapsprov-for-lakare/teoretiskt-delprov/" target="_blank" rel="noopener">https://www.umu.se/utbildning/sok/kunskapsprov/kunskapsprov-for-lakare/teoretiskt-delprov/</a></p>
+                <p>Kunskapsprov tandläkare
+                   <br><a href="https://ki.se/dentmed/utbildning/kunskapsprov-for-tandlakare-med-utbildning-fran-lander-utanfor-euees" target="_blank" rel="noopener">https://ki.se/dentmed/utbildning/kunskapsprov-for-tandlakare-med-utbildning-fran-lander-utanfor-euees</a></p>
+                <p>Kunskapsprov farmaceuter
+                   <br><a href="https://www.uu.se/utbildning/anmalan-och-antagning/utlandsk-utbildning/arbeta-som-farmaceut-i-sverige/kunskapsprov" target="_blank" rel="noopener">https://www.uu.se/utbildning/anmalan-och-antagning/utlandsk-utbildning/arbeta-som-farmaceut-i-sverige/kunskapsprov</a>
+                   <br><a href="https://www.uu.se/utbildning/anmalan-och-antagning/utlandsk-utbildning/arbeta-som-farmaceut-i-sverige/kunskapsprov/forberedelser-till-det-teoretiska-kunskapsprovet" target="_blank" rel="noopener">https://www.uu.se/utbildning/anmalan-och-antagning/utlandsk-utbildning/arbeta-som-farmaceut-i-sverige/kunskapsprov/forberedelser-till-det-teoretiska-kunskapsprovet</a></p>
+                <p>Kunskapsprov audionomer
+                   <br><a href="https://www.gu.se/studera/hitta-utbildning/kunskapsprov-audionomer" target="_blank" rel="noopener">https://www.gu.se/studera/hitta-utbildning/kunskapsprov-audionomer</a></p>
+            <p>Created by Ariel Ekgren.</p>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        // Utility: robust-ish CSV parser (handles quotes, commas, newlines)
+        function parseCSV(text) {
+            const rows = [];
+            let i = 0, field = '', row = [], inQuotes = false;
+            while (i < text.length) {
+                const c = text[i];
+                if (inQuotes) {
+                    if (c === '"') {
+                        if (text[i + 1] === '"') { field += '"'; i++; }
+                        else { inQuotes = false; }
+                    } else { field += c; }
+                } else {
+                    if (c === '"') inQuotes = true;
+                    else if (c === ',') { row.push(field); field = ''; }
+                    else if (c === '\n' || c === '\r') {
+                        if (field !== '' || row.length) { row.push(field); rows.push(row); row = []; field = ''; }
+                        // swallow \r\n combos
+                        if (c === '\r' && text[i + 1] === '\n') i++;
+                    } else { field += c; }
+                }
+                i++;
+            }
+            if (field !== '' || row.length) { row.push(field); rows.push(row); }
+            return rows;
+        }
+
+        function humanizeTest(id) {
+            const map = {
+                '2024-10-20': 'HP Verb',
+                'kunskapsprov_apotekare_2024-01-23_del_a': 'Apotekare',
+                'kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov': 'Audionomer',
+                'kunskapsprov_läkare_2024-11-26_mcq-140': 'Läkare',
+                'kunskapsprov_tandläkare_TDL-2411': 'Tandläkare',
+                'matematik_och_fysikprovet': 'Matematik och Fysikprovet',
+            };
+            if (map[id]) return map[id];
+            // Fallback: humanize
+            return id
+                .replaceAll('_', ' ')
+                .replaceAll('-', ' ')
+                .replace(/\b\d{4}-\d{2}-\d{2}\b/g, '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .replace(/^\w/, (c) => c.toUpperCase());
+        }
+
+        function displayModelName(raw) {
+            return raw.replaceAll('/', '-');
+        }
+
+        function getOpenWeights(displayName) {
+            const map = {
+                'x-ai-grok-3-mini': '🔴',
+                'openai-gpt-5-mini': '🔴',
+                'openai-gpt-5-nano': '🔴',
+                'openai-gpt-oss-120b': '🟢',
+                'openai-gpt-oss-20b': '🟢',
+                'mistralai-mistral-medium-3.1': '🟢',
+                'qwen-qwen3-235b-a22b-thinking-2507': '🟢',
+                'deepseek-deepseek-r1-0528': '🟢',
+                'meta-llama-llama-4-maverick': '🟢',
+                'meta-llama-llama-3.3-70b-instruct': '🟢',
+                'tencent-hunyuan-a13b-instruct': '🟢',
+                'moonshotai-kimi-k2': '🟢',
+                'google-gemini-2.5-flash': '🔴',
+                'google-gemini-2.5-flash-lite': '🔴',
+                'google-gemma-3n-e4b-it': '🟢',
+                'z-ai-glm-4.5': '🟢',
+                'z-ai-glm-4-32b': '🟢',
+                'baidu-ernie-4.5-21b-a3b': '🟢',
+                'microsoft-phi-4-reasoning-plus': '🟢'
+            };
+            return map[displayName] || '-';
+        }
+
+        function buildTable(headers, rows) {
+            const table = document.getElementById('results-table');
+            const thead = table.tHead || table.createTHead();
+            const tbody = table.tBodies[0] || table.createTBody();
+            thead.innerHTML = '';
+            tbody.innerHTML = '';
+
+            // Determine test columns by pairing *_points with *_total
+            const pointCols = headers.filter(h => h.endsWith('_points'));
+            const tests = pointCols.map(pc => pc.replace(/_points$/, ''))
+                .filter(id => headers.includes(id + '_total'));
+
+            const hasOpenWeights = headers.includes('open_weights');
+
+            // Build header row: Model | Average | Open Weights | each test
+            const hdrRow = document.createElement('tr');
+            const hdrs = ['Model', 'Average', 'Open Weights', ...tests.map(humanizeTest)];
+            hdrs.forEach((label, idx) => {
+                const th = document.createElement('th');
+                th.textContent = label;
+                if (idx === 1 || idx >= 3) th.classList.add('num'); // numeric columns
+                th.addEventListener('click', () => sortTable(idx));
+                hdrRow.appendChild(th);
+            });
+            thead.appendChild(hdrRow);
+
+            // Build body rows
+            rows.forEach(r => {
+                const obj = Object.fromEntries(headers.map((h, i) => [h, r[i]]));
+                const model = displayModelName(obj['sampled_model_name']);
+                // Compute ratios and average
+                const ratios = tests.map(id => {
+                    const p = parseFloat(obj[id + '_points']);
+                    const t = parseFloat(obj[id + '_total']);
+                    if (!Number.isFinite(p) || !Number.isFinite(t) || t === 0) return null;
+                    return p / t;
+                });
+                const validRatios = ratios.filter(v => v !== null);
+                const avg = validRatios.length ? validRatios.reduce((a,b)=>a+b,0) / validRatios.length : 0;
+
+                const tr = document.createElement('tr');
+                // Model
+                const tdModel = document.createElement('td');
+                tdModel.textContent = model;
+                tr.appendChild(tdModel);
+                // Average
+                const tdAvg = document.createElement('td');
+                tdAvg.textContent = avg.toFixed(2);
+                tdAvg.classList.add('num');
+                tdAvg.dataset.value = String(avg);
+                tr.appendChild(tdAvg);
+                // Open Weights
+                const tdOpen = document.createElement('td');
+                tdOpen.textContent = hasOpenWeights ? (obj['open_weights'] || 'Unknown') : getOpenWeights(model);
+                tr.appendChild(tdOpen);
+                // Tests
+                tests.forEach((id, i) => {
+                    const td = document.createElement('td');
+                    const ratio = ratios[i];
+                    const pStr = obj[id + '_points'];
+                    const tStr = obj[id + '_total'];
+                    if (ratio === null) {
+                        td.textContent = '-';
+                    } else {
+                        td.textContent = `${pStr}/${tStr}`;
+                        td.dataset.ratio = String(ratio);
+                    }
+                    td.classList.add('num');
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            // After building, enable accessibility + sorting affordances
+            setupSorting();
+        }
+
+        function stableTestOrder(allKeys) {
+            const preferred = [
+                '2024-10-20',
+                'kunskapsprov_apotekare_2024-01-23_del_a',
+                'kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov',
+                'kunskapsprov_läkare_2024-11-26_mcq-140',
+                'kunskapsprov_tandläkare_TDL-2411',
+                'matematik_och_fysikprovet',
+            ];
+            const set = new Set(allKeys);
+            const ordered = preferred.filter(k => set.has(k));
+            const rest = Array.from(set).filter(k => !preferred.includes(k)).sort();
+            return [...ordered, ...rest];
+        }
+
+        function buildTableFromJson(items) {
+            const table = document.getElementById('results-table');
+            const thead = table.tHead || table.createTHead();
+            const tbody = table.tBodies[0] || table.createTBody();
+            thead.innerHTML = '';
+            tbody.innerHTML = '';
+
+            // Determine union of test keys
+            const union = new Set();
+            items.forEach(obj => {
+                Object.keys(obj).forEach(k => {
+                    if (k !== 'sampled_model_name' && k !== 'open_weights' && typeof obj[k] === 'object') {
+                        union.add(k);
+                    }
+                });
+            });
+            const tests = stableTestOrder(Array.from(union));
+            const hasOpenWeights = items.some(x => typeof x.open_weights === 'string');
+
+            // Header
+            const hdrRow = document.createElement('tr');
+            const hdrs = ['Model', 'Average', 'Open Weights', ...tests.map(humanizeTest)];
+            hdrs.forEach((label, idx) => {
+                const th = document.createElement('th');
+                th.textContent = label;
+                if (idx === 1 || idx >= 3) th.classList.add('num');
+                th.addEventListener('click', () => sortTable(idx));
+                hdrRow.appendChild(th);
+            });
+            thead.appendChild(hdrRow);
+
+            // Rows
+            items.forEach(obj => {
+                const model = displayModelName(obj['sampled_model_name'] || '');
+                const tr = document.createElement('tr');
+                const tdModel = document.createElement('td');
+                tdModel.textContent = model;
+                tr.appendChild(tdModel);
+
+                // Compute ratios
+                const ratios = tests.map(id => {
+                    const entry = obj[id];
+                    if (!entry || typeof entry !== 'object') return null;
+                    const p = parseFloat(entry.points);
+                    const t = parseFloat(entry.total);
+                    if (!Number.isFinite(p) || !Number.isFinite(t) || t === 0) return null;
+                    return p / t;
+                });
+                const valid = ratios.filter(v => v !== null);
+                const avg = valid.length ? valid.reduce((a,b)=>a+b,0) / valid.length : 0;
+
+                const tdAvg = document.createElement('td');
+                tdAvg.textContent = avg.toFixed(2);
+                tdAvg.classList.add('num');
+                tdAvg.dataset.value = String(avg);
+                tr.appendChild(tdAvg);
+
+                const tdOpen = document.createElement('td');
+                tdOpen.textContent = hasOpenWeights && obj.open_weights ? obj.open_weights : getOpenWeights(model);
+                tr.appendChild(tdOpen);
+
+                tests.forEach((id, i) => {
+                    const td = document.createElement('td');
+                    const entry = obj[id];
+                    if (!entry || typeof entry !== 'object') {
+                        td.textContent = '-';
+                    } else {
+                        const pStr = String(entry.points);
+                        const tStr = String(entry.total);
+                        td.textContent = `${pStr}/${tStr}`;
+                        const p = parseFloat(pStr), t = parseFloat(tStr);
+                        if (Number.isFinite(p) && Number.isFinite(t) && t !== 0) td.dataset.ratio = String(p/t);
+                    }
+                    td.classList.add('num');
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            setupSorting();
+        }
+
+        function sortTable(n) {
+            const table = document.getElementById('results-table');
+            const tbody = table.tBodies[0];
+            const rows = Array.from(tbody.rows);
+            const ths = table.tHead.rows[0].cells;
+            const th = ths[n];
+
+            const currentDir = th.classList.contains('sort-asc') ? 'asc' : th.classList.contains('sort-desc') ? 'desc' : 'none';
+            const dir = currentDir === 'asc' ? 'desc' : 'asc';
+
+            Array.from(ths).forEach(h => {
+                h.classList.remove('sort-asc', 'sort-desc');
+                h.setAttribute('aria-sort', 'none');
+            });
+
+            const getVal = (cell) => {
+                // Prefer explicit data attributes when present
+                if (cell.dataset && cell.dataset.ratio) {
+                    const v = parseFloat(cell.dataset.ratio);
+                    if (!Number.isNaN(v)) return v;
+                }
+                if (cell.dataset && cell.dataset.value) {
+                    const v = parseFloat(cell.dataset.value);
+                    if (!Number.isNaN(v)) return v;
+                }
+                const text = cell.textContent.trim();
+                // Parse n / m pattern into a ratio
+                const m = text.match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/);
+                if (m) {
+                    const nVal = parseFloat(m[1]);
+                    const dVal = parseFloat(m[2]);
+                    if (Number.isFinite(nVal) && Number.isFinite(dVal) && dVal !== 0) {
+                        return nVal / dVal;
+                    }
+                }
+                const num = parseFloat(text);
+                return Number.isNaN(num) ? text.toLowerCase() : num;
+            };
+
+            rows.sort((a, b) => {
+                const x = getVal(a.cells[n]);
+                const y = getVal(b.cells[n]);
+                const isNum = typeof x === 'number' && typeof y === 'number';
+                if (isNum) return dir === 'asc' ? x - y : y - x;
+                return dir === 'asc' ? String(x).localeCompare(String(y)) : String(y).localeCompare(String(x));
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+            th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+            th.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : 'descending');
+        }
+
+        function setupSorting() {
+            const table = document.getElementById('results-table');
+            if (!table) return;
+            const ths = table.querySelectorAll('thead th');
+            ths.forEach((th, idx) => {
+                th.setAttribute('role', 'button');
+                th.setAttribute('tabindex', '0');
+                th.setAttribute('aria-sort', 'none');
+                th.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        sortTable(idx);
+                    }
+                });
+            });
+        }
+
+        // Sort by column n in descending order on first render
+        function initialSortDescending(n) {
+            const table = document.getElementById('results-table');
+            if (!table || !table.tHead || !table.tHead.rows.length) return;
+            const th = table.tHead.rows[0].cells[n];
+            if (!th) return;
+            // Mark as asc so our sorter flips to desc
+            th.classList.add('sort-asc');
+            sortTable(n);
+        }
+
+        async function tryLoadManifestAndRender() {
+            const res = await fetch('results/manifest.json', { cache: 'no-store' });
+            if (!res.ok) throw new Error('manifest missing');
+            const files = await res.json();
+            if (!Array.isArray(files) || !files.length) throw new Error('manifest empty');
+            // Fetch all grade JSONs in parallel
+            const texts = await Promise.all(files.map(f => fetch('results/' + f, { cache: 'no-store' }).then(r => {
+                if (!r.ok) throw new Error('Failed to load ' + f);
+                return r.text();
+            })));
+            const items = texts.map(t => JSON.parse(t));
+            buildTableFromJson(items);
+            initialSortDescending(1);
+        }
+
+        async function init() {
+            const table = document.getElementById('results-table');
+            const thead = table.tHead || table.createTHead();
+            const loadingRow = document.createElement('tr');
+            const loadingTh = document.createElement('th');
+            loadingTh.textContent = 'Loading...';
+            loadingTh.colSpan = 6;
+            loadingRow.appendChild(loadingTh);
+            thead.appendChild(loadingRow);
+
+            try {
+                // Prefer manifest-based JSON loading; fallback to CSV
+                try {
+                    await tryLoadManifestAndRender();
+                } catch (_) {
+                    const res = await fetch('results/grades.csv', { cache: 'no-store' });
+                    if (!res.ok) throw new Error('Failed to load results/grades.csv');
+                    const text = await res.text();
+                    const rows = parseCSV(text).filter(r => r.length && r.some(x => x && x.trim() !== ''));
+                    if (rows.length < 2) throw new Error('No data in CSV');
+                    const headers = rows[0];
+                    const dataRows = rows.slice(1);
+                    buildTable(headers, dataRows);
+                    initialSortDescending(1);
+                }
+            } catch (err) {
+                thead.innerHTML = '';
+                const tr = document.createElement('tr');
+                const th = document.createElement('th');
+                th.textContent = 'Could not load results. If opening as a local file, please serve via a web server.';
+                tr.appendChild(th);
+                thead.appendChild(tr);
+                console.error(err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
