@@ -1,5 +1,5 @@
 
-const files = ["results/ekgren-swedish_skolprov_all_tencent-hunyuan-a13b-instruct_grades.json", "results/ekgren-swedish_skolprov_all_mistralai-mistral-medium-3.1_grades.json", "results/ekgren-swedish_skolprov_all_openai-gpt-oss-20b_grades.json", "results/ekgren-swedish_skolprov_all_google-gemini-2.5-flash-lite_grades.json", "results/ekgren-swedish_skolprov_all_openai-gpt-oss-120b_grades.json", "results/ekgren-swedish_skolprov_all_openai-gpt-5-mini_grades.json", "results/ekgren-swedish_skolprov_all_baidu-ernie-4.5-21b-a3b_grades.json", "results/ekgren-swedish_skolprov_all_qwen-qwen3-235b-a22b-thinking-2507_grades.json", "results/ekgren-swedish_skolprov_all_z-ai-glm-4-32b_grades.json", "results/ekgren-swedish_skolprov_all_z-ai-glm-4.5_grades.json", "results/ekgren-swedish_skolprov_all_openai-gpt-5-nano_grades.json", "results/ekgren-swedish_skolprov_all_moonshotai-kimi-k2_grades.json"];
+const files = __FILES__;
 
 const resultsTable = document.getElementById("results-table").getElementsByTagName("tbody")[0];
 const testFilter = document.getElementById("test-filter");

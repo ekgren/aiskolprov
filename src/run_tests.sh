@@ -2,7 +2,19 @@
 
 # List of model names
 models=(
+    # "google/gemma-3n-e2b-it"
+    "moonshotai/kimi-k2"
+    "openai/gpt-oss-20b"
+    "openai/gpt-oss-120b"
+    "qwen/qwen3-235b-a22b-thinking-2507"
+    "z-ai/glm-4.5"
+    "z-ai/glm-4-32b"
+    "baidu/ernie-4.5-21b-a3b"
+    "tencent/hunyuan-a13b-instruct"
     "google/gemini-2.5-flash-lite"
+    "openai/gpt-5-nano"
+    "openai/gpt-5-mini"
+    "mistralai/mistral-medium-3.1"
 )
 
 # Loop through each model and run evaluation
