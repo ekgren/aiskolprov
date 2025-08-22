@@ -1,8 +1,10 @@
 [
+  "ekgren-swedish_skolprov_all_anthropic-claude-3.5-haiku_grades.json",
   "ekgren-swedish_skolprov_all_baidu-ernie-4.5-21b-a3b_grades.json",
   "ekgren-swedish_skolprov_all_deepseek-deepseek-chat-v3.1_grades.json",
   "ekgren-swedish_skolprov_all_google-gemini-2.5-flash-lite_grades.json",
   "ekgren-swedish_skolprov_all_google-gemini-2.5-flash_grades.json",
+  "ekgren-swedish_skolprov_all_google-gemini-2.5-pro_grades.json",
   "ekgren-swedish_skolprov_all_google-gemma-3n-e4b-it_grades.json",
   "ekgren-swedish_skolprov_all_meta-llama-llama-3.3-70b-instruct_grades.json",
   "ekgren-swedish_skolprov_all_meta-llama-llama-4-maverick_grades.json",
