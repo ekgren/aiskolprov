@@ -2,8 +2,8 @@
 
 # List of model names
 models=(
-    # "deepseek/deepseek-v3.1-base"
-    # "deepseek/deepseek-r1-0528"
+    "deepseek/deepseek-chat-v3.1"
+    "deepseek/deepseek-r1-0528"
     "google/gemini-2.5-flash"
     "x-ai/grok-3-mini"
     "google/gemma-3n-e4b-it"

@@ -1,5 +1,6 @@
 [
   "ekgren-swedish_skolprov_all_baidu-ernie-4.5-21b-a3b_grades.json",
+  "ekgren-swedish_skolprov_all_deepseek-deepseek-chat-v3.1_grades.json",
   "ekgren-swedish_skolprov_all_google-gemini-2.5-flash-lite_grades.json",
   "ekgren-swedish_skolprov_all_google-gemini-2.5-flash_grades.json",
   "ekgren-swedish_skolprov_all_google-gemma-3n-e4b-it_grades.json",
@@ -13,6 +14,8 @@
   "ekgren-swedish_skolprov_all_openai-gpt-oss-120b_grades.json",
   "ekgren-swedish_skolprov_all_openai-gpt-oss-20b_grades.json",
   "ekgren-swedish_skolprov_all_qwen-qwen3-235b-a22b-thinking-2507_grades.json",
+  "ekgren-swedish_skolprov_all_tencent-hunyuan-a13b-instruct_grades.json",
+  "ekgren-swedish_skolprov_all_x-ai-grok-3-mini_grades.json",
   "ekgren-swedish_skolprov_all_z-ai-glm-4-32b_grades.json",
   "ekgren-swedish_skolprov_all_z-ai-glm-4.5_grades.json"
 ]
