@@ -2,10 +2,10 @@
 
 # List of model names
 models=(
-    "meta-llama/llama-3.1-405b-instruct"
+    "openai/gpt-5"
+    # "meta-llama/llama-3.1-405b-instruct"
     # "anthropic/claude-sonnet-4"
     # "anthropic/claude-3.5-haiku"
-    # "openai/gpt-5"
     # "google/gemini-2.5-pro"
     # "deepseek/deepseek-chat-v3.1"
     # "deepseek/deepseek-r1-0528"
