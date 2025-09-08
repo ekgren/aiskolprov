@@ -2,7 +2,12 @@
 
 # List of model names
 models=(
-    "openai/gpt-5"
+    "openrouter/sonoma-dusk-alpha"
+    "openrouter/sonoma-sky-alpha"
+    # "qwen/qwen3-max"
+    "moonshotai/kimi-k2-0905"
+    "bytedance/seed-oss-36b-instruct"
+    # "openai/gpt-5"
     # "meta-llama/llama-3.1-405b-instruct"
     # "anthropic/claude-sonnet-4"
     # "anthropic/claude-3.5-haiku"
