@@ -126,6 +126,7 @@
                     'kunskapsprov_läkare_2024-11-26_mcq-140': 'Läkare',
                     'kunskapsprov_tandläkare_TDL-2411': 'Tandläkare',
                     'matematik_och_fysikprovet': 'Matematik och Fysikprovet',
+                    'thinking': 'THINKING',
                 };
                 if (map[id]) return map[id];
                 // Fallback: humanize
@@ -184,6 +185,39 @@
                 return map[displayName] || '-';
             }
 
+            function setColumnWidths() {
+                const table = document.getElementById('results-table');
+                if (!table || !table.tHead || !table.tHead.rows.length) return;
+                
+                const headerRow = table.tHead.rows[0];
+                const numColumns = headerRow.cells.length;
+                
+                // Fixed widths for first 3 columns: Model (25%), Average (6%), Open Weights (5%)
+                // Reduced widths to give more space to test columns while keeping table visible
+                const fixedWidths = [25, 6, 5];
+                const remainingWidth = 100 - fixedWidths.reduce((a, b) => a + b, 0); // 64%
+                
+                // Distribute remaining width among test columns (columns 4+)
+                const numTestColumns = numColumns - 3;
+                const testColumnWidth = numTestColumns > 0 ? remainingWidth / numTestColumns : 0;
+                
+                // Set widths for all columns
+                for (let i = 0; i < numColumns; i++) {
+                    const width = i < 3 ? fixedWidths[i] : testColumnWidth;
+                    const style = `width: ${width}%`;
+                    headerRow.cells[i].style.cssText = style;
+                    // Apply to all body cells in this column
+                    const tbody = table.tBodies[0];
+                    if (tbody) {
+                        Array.from(tbody.rows).forEach(row => {
+                            if (row.cells[i]) {
+                                row.cells[i].style.cssText = style;
+                            }
+                        });
+                    }
+                }
+            }
+
             function buildTable(headers, rows) {
                 const table = document.getElementById('results-table');
                 const thead = table.tHead || table.createTHead();
@@ -195,6 +229,9 @@
                 const pointCols = headers.filter(h => h.endsWith('_points'));
                 const tests = pointCols.map(pc => pc.replace(/_points$/, ''))
                     .filter(id => headers.includes(id + '_total'));
+                
+                // Add dummy "thinking" test column
+                tests.push('thinking');
 
                 const hasOpenWeights = headers.includes('open_weights');
 
@@ -204,7 +241,12 @@
                 hdrs.forEach((label, idx) => {
                     const th = document.createElement('th');
                     th.textContent = label;
-                    if (idx === 1 || idx >= 3) th.classList.add('num'); // numeric columns
+                    // THINKING column should be centered like Open Weights, not numeric
+                    if (label === 'THINKING') {
+                        // Don't add 'num' class, keep centered
+                    } else if (idx === 1 || idx >= 3) {
+                        th.classList.add('num'); // numeric columns
+                    }
                     th.addEventListener('click', () => sortTable(idx));
                     hdrRow.appendChild(th);
                 });
@@ -214,8 +256,20 @@
                 rows.forEach(r => {
                     const obj = Object.fromEntries(headers.map((h, i) => [h, r[i]]));
                     const model = displayModelName(obj['sampled_model_name']);
-                    // Compute ratios and average
+                    
+                    // Pre-generate random icon for "thinking" column to ensure consistency
+                    let thinkingIcon = null;
+                    if (tests.includes('thinking')) {
+                        // Randomly assign red or green icon
+                        thinkingIcon = Math.random() > 0.5 ? '🔴' : '🟢';
+                    }
+                    
+                    // Compute ratios and average (excluding thinking column)
                     const ratios = tests.map(id => {
+                        // Skip thinking column in ratio calculation
+                        if (id === 'thinking') {
+                            return null; // Don't include in average
+                        }
                         const p = parseFloat(obj[id + '_points']);
                         const t = parseFloat(obj[id + '_total']);
                         if (!Number.isFinite(p) || !Number.isFinite(t) || t === 0) return null;
@@ -243,15 +297,21 @@
                     tests.forEach((id, i) => {
                         const td = document.createElement('td');
                         const ratio = ratios[i];
-                        const pStr = obj[id + '_points'];
-                        const tStr = obj[id + '_total'];
-                        if (ratio === null) {
-                            td.textContent = '-';
+                        // Handle dummy "thinking" column with red/green icons
+                        if (id === 'thinking') {
+                            td.textContent = thinkingIcon;
+                            td.setAttribute('data-thinking', 'true'); // Mark for CSS centering
                         } else {
-                            td.textContent = `${pStr}/${tStr}`;
-                            td.dataset.ratio = String(ratio);
+                            const pStr = obj[id + '_points'];
+                            const tStr = obj[id + '_total'];
+                            if (ratio === null) {
+                                td.textContent = '-';
+                            } else {
+                                td.textContent = `${pStr}/${tStr}`;
+                                td.dataset.ratio = String(ratio);
+                            }
+                            td.classList.add('num');
                         }
-                        td.classList.add('num');
                         tr.appendChild(td);
                     });
                     tbody.appendChild(tr);
@@ -259,6 +319,8 @@
 
                 // After building, enable accessibility + sorting affordances
                 setupSorting();
+                // Set column widths dynamically
+                setColumnWidths();
             }
 
             function stableTestOrder(allKeys) {
@@ -293,6 +355,8 @@
                     });
                 });
                 const tests = stableTestOrder(Array.from(union));
+                // Add dummy "thinking" test column
+                tests.push('thinking');
                 const hasOpenWeights = items.some(x => typeof x.open_weights === 'string');
 
                 // Header
@@ -301,7 +365,12 @@
                 hdrs.forEach((label, idx) => {
                     const th = document.createElement('th');
                     th.textContent = label;
-                    if (idx === 1 || idx >= 3) th.classList.add('num');
+                    // THINKING column should be centered like Open Weights, not numeric
+                    if (label === 'THINKING') {
+                        // Don't add 'num' class, keep centered
+                    } else if (idx === 1 || idx >= 3) {
+                        th.classList.add('num');
+                    }
                     th.addEventListener('click', () => sortTable(idx));
                     hdrRow.appendChild(th);
                 });
@@ -310,13 +379,25 @@
                 // Rows
                 items.forEach(obj => {
                     const model = displayModelName(obj['sampled_model_name'] || '');
+                    
+                    // Pre-generate random icon for "thinking" column to ensure consistency
+                    let thinkingIcon = null;
+                    if (tests.includes('thinking')) {
+                        // Randomly assign red or green icon
+                        thinkingIcon = Math.random() > 0.5 ? '🔴' : '🟢';
+                    }
+                    
                     const tr = document.createElement('tr');
                     const tdModel = document.createElement('td');
                     tdModel.textContent = model;
                     tr.appendChild(tdModel);
 
-                    // Compute ratios
+                    // Compute ratios (excluding thinking column)
                     const ratios = tests.map(id => {
+                        // Skip thinking column in ratio calculation
+                        if (id === 'thinking') {
+                            return null; // Don't include in average
+                        }
                         const entry = obj[id];
                         if (!entry || typeof entry !== 'object') return null;
                         const p = parseFloat(entry.points);
@@ -339,23 +420,33 @@
 
                     tests.forEach((id, i) => {
                         const td = document.createElement('td');
-                        const entry = obj[id];
-                        if (!entry || typeof entry !== 'object') {
-                            td.textContent = '-';
+                        const ratio = ratios[i];
+                        // Handle dummy "thinking" column with red/green icons
+                        if (id === 'thinking') {
+                            td.textContent = thinkingIcon;
+                            td.setAttribute('data-thinking', 'true'); // Mark for CSS centering
                         } else {
-                            const pStr = String(entry.points);
-                            const tStr = String(entry.total);
-                            td.textContent = `${pStr}/${tStr}`;
-                            const p = parseFloat(pStr), t = parseFloat(tStr);
-                            if (Number.isFinite(p) && Number.isFinite(t) && t !== 0) td.dataset.ratio = String(p / t);
+                            const entry = obj[id];
+                            if (!entry || typeof entry !== 'object') {
+                                td.textContent = '-';
+                            } else {
+                                const pStr = String(entry.points);
+                                const tStr = String(entry.total);
+                                td.textContent = `${pStr}/${tStr}`;
+                                if (ratio !== null) {
+                                    td.dataset.ratio = String(ratio);
+                                }
+                            }
+                            td.classList.add('num');
                         }
-                        td.classList.add('num');
                         tr.appendChild(td);
                     });
                     tbody.appendChild(tr);
                 });
 
                 setupSorting();
+                // Set column widths dynamically
+                setColumnWidths();
             }
 
             function sortTable(n) {

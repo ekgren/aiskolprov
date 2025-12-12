@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-    max-width: 860px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 1em;
     background-color: #fff;
@@ -59,12 +59,12 @@ table {
     margin: 1em 0;
     font-size: 0.8rem; /* Consistent font size */
     table-layout: fixed;
-    min-width: 860px; /* keep column layout; scroll when viewport < 860px */
+    min-width: 100%; /* Use full container width */
 }
 
 th, td {
     border: 1px solid #CCCCCC; /* Rule: light gray border */
-    padding: 0.1em 0.4em;
+    padding: 0.1em 0.15em 0.1em 0.1em; /* top right bottom left - minimal left padding */
     text-align: left;
     word-wrap: break-word;
 }
@@ -77,22 +77,26 @@ th {
     text-align: center;
     vertical-align: center;
     text-transform: uppercase; /* Rule: uppercase headers */
+    word-break: normal; /* Prevent breaking words in the middle */
+    overflow-wrap: break-word; /* Allow wrapping at word boundaries only */
+    hyphens: none; /* Prevent hyphenation */
 }
 
 /* Right-align only numeric cells */
 td.num { text-align: right; }
 
+/* Center align thinking column */
+td[data-thinking="true"] { 
+    text-align: center !important; 
+}
 
-/* Column widths */
-th:nth-child(1), td:nth-child(1) { width: 40%; } /* Model name, force left align */
-th:nth-child(2), td:nth-child(2) { width: 8%; }  /* Average */
-th:nth-child(3), td:nth-child(3) { width: 7%; text-align: center;} /* Open Weights */
-th:nth-child(4), td:nth-child(4) { width: 8%; }
-th:nth-child(5), td:nth-child(5) { width: 10%; }
-th:nth-child(6), td:nth-child(6) { width: 10%; }
-th:nth-child(7), td:nth-child(7) { width: 10%; }
-th:nth-child(8), td:nth-child(8) { width: 10%; }
-th:nth-child(9), td:nth-child(9) { width: 12%; }
+
+/* Column widths - dynamically set via JavaScript */
+/* First 3 columns have fixed widths, remaining columns are set dynamically */
+th:nth-child(1), td:nth-child(1) { width: 25%; } /* Model name, force left align */
+th:nth-child(2), td:nth-child(2) { width: 6%; }  /* Average */
+th:nth-child(3), td:nth-child(3) { width: 5%; text-align: center;} /* Open Weights */
+/* Test columns (4+) will have widths set dynamically by JavaScript */
 
 a {
     color: #000000; /* Black, like the rest of the text */
