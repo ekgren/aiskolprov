@@ -2,8 +2,10 @@
 
 body {
     font-family: 'IBM Plex Mono', monospace;
-    background-color: #F2F2F2; /* Rule: off-white background */
-    color: #000000; /* Rule: black text */
+    background-color: #F2F2F2;
+    /* Rule: off-white background */
+    color: #000000;
+    /* Rule: black text */
     line-height: 1.6;
     margin: 0;
     padding: 1em;
@@ -16,18 +18,22 @@ body {
     margin: 0 auto;
     padding: 1em;
     background-color: #fff;
-    border: 1px solid #CCCCCC; /* Rule: light gray border */
+    border: 1px solid #CCCCCC;
+    /* Rule: light gray border */
 }
 
 .table-wrap {
-    overflow-x: auto; /* horizontal scroll on small screens */
+    overflow-x: auto;
+    /* horizontal scroll on small screens */
     overflow-y: hidden;
-    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* smooth scrolling on iOS */
 }
 
 .header-accent {
     height: 10px;
-    background: linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #9400D3); /* 8-bit rainbow */
+    background: linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #9400D3);
+    /* 8-bit rainbow */
     margin-bottom: 1em;
 }
 
@@ -36,19 +42,25 @@ body {
 
 hr {
     border: none;
-    border-top: 1px solid #CCCCCC; /* Rule: light gray rule */
+    border-top: 1px solid #CCCCCC;
+    /* Rule: light gray rule */
     margin: 1em 0;
 }
 
 h1 {
-    font-size: 1.5rem; /* Larger heading */
-    font-weight: bold; /* Bolder heading */
+    font-size: 1.5rem;
+    /* Larger heading */
+    font-weight: bold;
+    /* Bolder heading */
     margin-bottom: 1em;
     text-align: left;
 }
 
-p, .intro, .footer {
-    font-size: 0.8rem; /* Consistent font size */
+p,
+.intro,
+.footer {
+    font-size: 0.8rem;
+    /* Consistent font size */
     margin-bottom: 1em;
     text-align: left;
 }
@@ -57,49 +69,79 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 1em 0;
-    font-size: 0.8rem; /* Consistent font size */
+    font-size: 0.8rem;
+    /* Consistent font size */
     table-layout: fixed;
-    min-width: 100%; /* Use full container width */
+    min-width: 100%;
+    /* Use full container width */
 }
 
-th, td {
-    border: 1px solid #CCCCCC; /* Rule: light gray border */
-    padding: 0.1em 0.15em 0.1em 0.1em; /* top right bottom left - minimal left padding */
+th,
+td {
+    border: 1px solid #CCCCCC;
+    /* Rule: light gray border */
+    padding: 0.1em 0.15em 0.1em 0.1em;
+    /* top right bottom left - minimal left padding */
     text-align: left;
     word-wrap: break-word;
 }
 
 th {
-    font-size: 0.6rem; /* Consistent font size */
-    background-color: #f8f8f8; /* Keeping a slight distinction for header */
+    font-size: 0.6rem;
+    /* Consistent font size */
+    background-color: #f8f8f8;
+    /* Keeping a slight distinction for header */
     font-weight: bold;
     cursor: pointer;
     text-align: center;
     vertical-align: center;
-    text-transform: uppercase; /* Rule: uppercase headers */
-    word-break: normal; /* Prevent breaking words in the middle */
-    overflow-wrap: break-word; /* Allow wrapping at word boundaries only */
-    hyphens: none; /* Prevent hyphenation */
+    text-transform: uppercase;
+    /* Rule: uppercase headers */
+    word-break: normal;
+    /* Prevent breaking words in the middle */
+    overflow-wrap: break-word;
+    /* Allow wrapping at word boundaries only */
+    hyphens: none;
+    /* Prevent hyphenation */
 }
 
 /* Right-align only numeric cells */
-td.num { text-align: right; }
+td.num {
+    text-align: right;
+}
 
 /* Center align thinking column */
-td[data-thinking="true"] { 
-    text-align: center !important; 
+td[data-thinking="true"] {
+    text-align: center !important;
 }
 
 
 /* Column widths - dynamically set via JavaScript */
 /* First 3 columns have fixed widths, remaining columns are set dynamically */
-th:nth-child(1), td:nth-child(1) { width: 25%; } /* Model name, force left align */
-th:nth-child(2), td:nth-child(2) { width: 6%; }  /* Average */
-th:nth-child(3), td:nth-child(3) { width: 5%; text-align: center;} /* Open Weights */
+th:nth-child(1),
+td:nth-child(1) {
+    width: 25%;
+}
+
+/* Model name, force left align */
+th:nth-child(2),
+td:nth-child(2) {
+    width: 6%;
+}
+
+/* Average */
+th:nth-child(3),
+td:nth-child(3) {
+    width: 5%;
+    text-align: center;
+}
+
+/* Open Weights */
 /* Test columns (4+) will have widths set dynamically by JavaScript */
 
 a {
-    color: #000000; /* Black, like the rest of the text */
+    color: #000000;
+    /* Black, like the rest of the text */
     text-decoration: underline;
 }
 
@@ -109,8 +151,10 @@ a:hover {
 
 .footer {
     margin-top: 2em;
-    font-size: 0.8rem; /* Consistent font size */
-    color: #000; /* Rule: black text */
+    font-size: 0.8rem;
+    /* Consistent font size */
+    color: #000;
+    /* Rule: black text */
 }
 
 /* Button styles not needed in single-page layout removed */
