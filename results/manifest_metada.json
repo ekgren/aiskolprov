@@ -1,0 +1,148 @@
+{
+    "model_metadata": {
+        "anthropic-claude-3.5-haiku": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "baidu-ernie-4.5-21b-a3b": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "bytedance-seed-oss-36b-instruct": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "deepseek-deepseek-chat-v3.1": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "deepseek-deepseek-r1-0528": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "deepseek-deepseek-v3.2": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "deepseek-deepseek-v3.2-speciale": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "google-gemini-2.5-flash": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "google-gemini-2.5-flash-lite": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "google-gemini-2.5-pro": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "google-gemini-3-pro-preview": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "google-gemma-3n-e4b-it": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "meta-llama-llama-3.1-405b-instruct": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "meta-llama-llama-3.3-70b-instruct": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "meta-llama-llama-4-maverick": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "microsoft-phi-4-reasoning-plus": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "mistralai-ministral-14b-2512": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "mistralai-ministral-3b-2512": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "mistralai-ministral-8b-2512": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "mistralai-mistral-large-2512": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "mistralai-mistral-medium-3.1": {
+            "open_weights": "False",
+            "thinking": "False"
+        },
+        "moonshotai-kimi-k2": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "moonshotai-kimi-k2-0905": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "moonshotai-kimi-k2-thinking": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "openai-gpt-5": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "openai-gpt-5.1": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "openai-gpt-5-mini": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "openai-gpt-5-nano": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "openai-gpt-oss-120b": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "openai-gpt-oss-20b": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "qwen-qwen3-235b-a22b-thinking-2507": {
+            "open_weights": "True",
+            "thinking": "True"
+        },
+        "tencent-hunyuan-a13b-instruct": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "x-ai-grok-3-mini": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "x-ai-grok-4.1-fast": {
+            "open_weights": "False",
+            "thinking": "True"
+        },
+        "z-ai-glm-4-32b": {
+            "open_weights": "True",
+            "thinking": "False"
+        },
+        "z-ai-glm-4.5": {
+            "open_weights": "True",
+            "thinking": "True"
+        }
+    }
+}

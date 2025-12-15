@@ -1,0 +1,1082 @@
+[
+  {
+    "sampled_model_name": "anthropic/claude-3.5-haiku",
+    "2024-10-20": {
+      "points": 74,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 99,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 52,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 64,
+      "total": 82
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 46,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 38,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.73
+  },
+  {
+    "sampled_model_name": "baidu/ernie-4.5-21b-a3b",
+    "2024-10-20": {
+      "points": 65,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 49,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 23,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 19,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 24,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 38,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.42
+  },
+  {
+    "sampled_model_name": "bytedance/seed-oss-36b-instruct",
+    "2024-10-20": {
+      "points": 65,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 102,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 46,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 68,
+      "total": 85
+    },
+    "matematik_och_fysikprovet": {
+      "points": 69,
+      "total": 125
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 48,
+      "total": 53
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.75
+  },
+  {
+    "sampled_model_name": "deepseek/deepseek-chat-v3.1",
+    "2024-10-20": {
+      "points": 78,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 109,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 45,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 67,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 49,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 62,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.78
+  },
+  {
+    "sampled_model_name": "deepseek/deepseek-r1-0528",
+    "2024-10-20": {
+      "points": 65,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 52,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 26,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 50,
+      "total": 89
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 30,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 3,
+      "total": 77
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.46
+  },
+  {
+    "sampled_model_name": "deepseek/deepseek-v3.2",
+    "2024-10-20": {
+      "points": 76,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 103,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 46,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 63,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 49,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 67,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.76
+  },
+  {
+    "sampled_model_name": "deepseek/deepseek-v3.2-speciale",
+    "2024-10-20": {
+      "points": 69,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 113,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 49,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 73,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 50,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 78,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.81
+  },
+  {
+    "sampled_model_name": "google/gemini-3-pro-preview",
+    "2024-10-20": {
+      "points": 79,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 122,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 61,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 79,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 52,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 91,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.9
+  },
+  {
+    "sampled_model_name": "google/gemini-2.5-flash-lite",
+    "2024-10-20": {
+      "points": 75,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 109,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 52,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 66,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 48,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 74,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.8
+  },
+  {
+    "sampled_model_name": "google/gemini-2.5-flash",
+    "2024-10-20": {
+      "points": 79,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 118,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 61,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 76,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 52,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 82,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.88
+  },
+  {
+    "sampled_model_name": "google/gemini-2.5-pro",
+    "2024-10-20": {
+      "points": 79,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 121,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 64,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 77,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 51,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 77,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.88
+  },
+  {
+    "sampled_model_name": "google/gemma-3n-e4b-it",
+    "2024-10-20": {
+      "points": 62,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 84,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 37,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 52,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 41,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 39,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.61
+  },
+  {
+    "sampled_model_name": "meta-llama/llama-3.1-405b-instruct",
+    "2024-10-20": {
+      "points": 77,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 112,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 50,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 70,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 49,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 70,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.81
+  },
+  {
+    "sampled_model_name": "meta-llama/llama-3.3-70b-instruct",
+    "2024-10-20": {
+      "points": 74,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 107,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 50,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 68,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 49,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 66,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.78
+  },
+  {
+    "sampled_model_name": "meta-llama/llama-4-maverick",
+    "2024-10-20": {
+      "points": 76,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 109,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 59,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 70,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 47,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 47,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.78
+  },
+  {
+    "sampled_model_name": "microsoft/phi-4-reasoning-plus",
+    "2024-10-20": {
+      "points": 3,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 8,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 4,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 8,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 4,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 4,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.06
+  },
+  {
+    "sampled_model_name": "mistralai/mistral-medium-3.1",
+    "2024-10-20": {
+      "points": 77,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 116,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 53,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 66,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 52,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 73,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🔴",
+    "average_score": 0.82
+  },
+  {
+    "sampled_model_name": "mistralai/ministral-14b-2512",
+    "2024-10-20": {
+      "points": 74,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 99,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 49,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 62,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 48,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 54,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.74
+  },
+  {
+    "sampled_model_name": "mistralai/ministral-8b-2512",
+    "2024-10-20": {
+      "points": 70,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 96,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 43,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 55,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 47,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 54,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.7
+  },
+  {
+    "sampled_model_name": "mistralai/ministral-3b-2512",
+    "2024-10-20": {
+      "points": 51,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 84,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 35,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 44,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 41,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 39,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.56
+  },
+  {
+    "sampled_model_name": "mistralai/mistral-large-2512",
+    "2024-10-20": {
+      "points": 78,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 110,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 55,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 73,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 53,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 78,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.85
+  },
+  {
+    "sampled_model_name": "moonshotai/kimi-k2-thinking",
+    "2024-10-20": {
+      "points": 75,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 117,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 53,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 77,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 52,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 73,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.84
+  },
+  {
+    "sampled_model_name": "moonshotai/kimi-k2-0905",
+    "2024-10-20": {
+      "points": 74,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 116,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 54,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 68,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 51,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 64,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.81
+  },
+  {
+    "sampled_model_name": "moonshotai/kimi-k2",
+    "2024-10-20": {
+      "points": 74,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 115,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 55,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 72,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 51,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 71,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.83
+  },
+  {
+    "sampled_model_name": "openai/gpt-5.1",
+    "2024-10-20": {
+      "points": 79,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 122,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 65,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 82,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 52,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 104,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.94
+  },
+  {
+    "sampled_model_name": "openai/gpt-5-mini",
+    "2024-10-20": {
+      "points": 77,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 119,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 61,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 79,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 53,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 103,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.91
+  },
+  {
+    "sampled_model_name": "openai/gpt-5-nano",
+    "2024-10-20": {
+      "points": 67,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 118,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 54,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 68,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 49,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 88,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.82
+  },
+  {
+    "sampled_model_name": "openai/gpt-5",
+    "2024-10-20": {
+      "points": 79,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 124,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 65,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 82,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 53,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 96,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.93
+  },
+  {
+    "sampled_model_name": "openai/gpt-oss-120b",
+    "2024-10-20": {
+      "points": 72,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 118,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 55,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 70,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 49,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 94,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.85
+  },
+  {
+    "sampled_model_name": "openai/gpt-oss-20b",
+    "2024-10-20": {
+      "points": 68,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 112,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 50,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 64,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 50,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 95,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.81
+  },
+  {
+    "sampled_model_name": "qwen/qwen3-235b-a22b-thinking-2507",
+    "2024-10-20": {
+      "points": 72,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 109,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 46,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 69,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 50,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 69,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.78
+  },
+  {
+    "sampled_model_name": "tencent/hunyuan-a13b-instruct",
+    "2024-10-20": {
+      "points": 0,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 0,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 0,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 0,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 0,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 0,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.0
+  },
+  {
+    "sampled_model_name": "x-ai/grok-3-mini",
+    "2024-10-20": {
+      "points": 74,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 119,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 59,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 74,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 52,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 86,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.87
+  },
+  {
+    "sampled_model_name": "x-ai/grok-4.1-fast",
+    "2024-10-20": {
+      "points": 78,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 125,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 63,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 80,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 51,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 106,
+      "total": 125
+    },
+    "open_weights": "🔴",
+    "thinking": "🟢",
+    "average_score": 0.93
+  },
+  {
+    "sampled_model_name": "z-ai/glm-4-32b",
+    "2024-10-20": {
+      "points": 71,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 95,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 43,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 60,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 46,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 57,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🔴",
+    "average_score": 0.71
+  },
+  {
+    "sampled_model_name": "z-ai/glm-4.5",
+    "2024-10-20": {
+      "points": 74,
+      "total": 80
+    },
+    "kunskapsprov_läkare_2024-11-26_mcq-140": {
+      "points": 115,
+      "total": 132
+    },
+    "kunskapsprov_tandläkare_TDL-2411": {
+      "points": 56,
+      "total": 70
+    },
+    "kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov": {
+      "points": 75,
+      "total": 85
+    },
+    "kunskapsprov_apotekare_2024-01-23_del_a": {
+      "points": 49,
+      "total": 53
+    },
+    "matematik_och_fysikprovet": {
+      "points": 36,
+      "total": 125
+    },
+    "open_weights": "🟢",
+    "thinking": "🟢",
+    "average_score": 0.78
+  }
+]
