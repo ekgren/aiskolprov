@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>LLM Benchmark Results</title>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
     <meta name="description"
         content="Results from a Swedish evaluation benchmark testing various LLMs on Swedish language tasks." />
 </head>
@@ -92,496 +92,465 @@
             </div>
         </div>
         <script>
-            // Utility: robust-ish CSV parser (handles quotes, commas, newlines)
-            function parseCSV(text) {
-                const rows = [];
-                let i = 0, field = '', row = [], inQuotes = false;
-                while (i < text.length) {
-                    const c = text[i];
-                    if (inQuotes) {
-                        if (c === '"') {
-                            if (text[i + 1] === '"') { field += '"'; i++; }
-                            else { inQuotes = false; }
-                        } else { field += c; }
-                    } else {
-                        if (c === '"') inQuotes = true;
-                        else if (c === ',') { row.push(field); field = ''; }
-                        else if (c === '\n' || c === '\r') {
-                            if (field !== '' || row.length) { row.push(field); rows.push(row); row = []; field = ''; }
-                            // swallow \r\n combos
-                            if (c === '\r' && text[i + 1] === '\n') i++;
-                        } else { field += c; }
-                    }
-                    i++;
-                }
-                if (field !== '' || row.length) { row.push(field); rows.push(row); }
-                return rows;
-            }
+            /**
+             * =================================================================================
+             *  MANAGER SUMMARY
+             * =================================================================================
+             *  How this page works (The "Kitchen" Analogy):
+             *
+             *  1. THE INGREDIENTS (Data Loading)
+             *     We fetch the raw test results from a file called 'data/model_table.json'.
+             *
+             *  2. THE RECIPE (Configuration)
+             *     We look at our TABLE_CONFIG below to decide:
+             *     - Which columns to show first?
+             *     - How wide should they be?
+             *     - How should we rename complex technical IDs into human-readable labels?
+             *
+             *  3. PREPARATION (Data Processing)
+             *     We chop and mix the raw data into a clean list of rows that match our
+             *     columns. We handle missing scores by showing '-' and putting them
+             *     at the bottom.
+             *
+             *  4. SERVING (Rendering)
+             *     Finally, we draw the table on the screen. We also add interactivity
+             *     so you can click headers to sort the "dishes" (models).
+             * =================================================================================
+             */
 
-            function humanizeTest(id) {
-                const map = {
+            // --- 1. THE RECIPE (Configuration) ---
+            // Everything about how the table looks and behaves is defined here.
+
+            const TABLE_CONFIG = {
+                // Where do we get the ingredients?
+                dataSource: 'data/model_table.json', // URL to the JSON file
+
+                // A. FIXED COLUMNS
+                // These columns ALWAYS appear at the start of the table.
+                fixedColumns: [
+                    {
+                        id: 'model',
+                        label: 'Model',
+                        widthPercent: 25,
+                        type: 'text'      // Just text
+                    },
+                    {
+                        id: 'average',
+                        label: 'Average',
+                        widthPercent: 6,
+                        type: 'number'    // Sorts numerically
+                    },
+                    {
+                        id: 'open_weights',
+                        label: 'Open Weights',
+                        widthPercent: 5,
+                        type: 'text'
+                    },
+                    {
+                        id: 'thinking',
+                        label: 'Thinking',
+                        widthPercent: 4,
+                        type: 'icon'
+                    }
+                ],
+
+                // B. TEST COLUMN RENAMING
+                // Map difficult ID names to nice human-readable labels.
+                columnLabels: {
                     '2024-10-20': 'HP Verb',
                     'kunskapsprov_apotekare_2024-01-23_del_a': 'Apotekare',
                     'kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov': 'Audionomer',
                     'kunskapsprov_läkare_2024-11-26_mcq-140': 'Läkare',
                     'kunskapsprov_tandläkare_TDL-2411': 'Tandläkare',
-                    'matematik_och_fysikprovet': 'Matematik och Fysikprovet',
-                    'thinking': 'THINKING',
-                };
-                if (map[id]) return map[id];
-                // Fallback: humanize
-                return id
-                    .replaceAll('_', ' ')
-                    .replaceAll('-', ' ')
-                    .replace(/\b\d{4}-\d{2}-\d{2}\b/g, '')
-                    .replace(/\s+/g, ' ')
-                    .trim()
-                    .replace(/^\w/, (c) => c.toUpperCase());
-            }
+                    'matematik_och_fysikprovet': 'Matematik och Fysikprovet'
+                },
 
-            function displayModelName(raw) {
-                return raw.replaceAll('/', '-');
-            }
-
-            function getOpenWeights(displayName) {
-                const map = {
-                    'anthropic-claude-3.5-haiku': '🔴',
-                    'baidu-ernie-4.5-21b-a3b': '🟢',
-                    'bytedance-seed-oss-36b-instruct': '🟢',
-                    'deepseek-deepseek-chat-v3.1': '🟢',
-                    'deepseek-deepseek-r1-0528': '🟢',
-                    'deepseek-deepseek-v3.2': '🟢',
-                    'deepseek-deepseek-v3.2-speciale': '🟢',
-                    'google-gemini-2.5-flash': '🔴',
-                    'google-gemini-2.5-flash-lite': '🔴',
-                    'google-gemini-2.5-pro': '🔴',
-                    'google-gemini-3-pro-preview': '🔴',
-                    'google-gemma-3n-e4b-it': '🟢',
-                    'meta-llama-llama-3.1-405b-instruct': '🟢',
-                    'meta-llama-llama-3.3-70b-instruct': '🟢',
-                    'meta-llama-llama-4-maverick': '🟢',
-                    'microsoft-phi-4-reasoning-plus': '🟢',
-                    'mistralai-ministral-14b-2512': '🟢',
-                    'mistralai-ministral-3b-2512': '🟢',
-                    'mistralai-ministral-8b-2512': '🟢',
-                    'mistralai-mistral-large-2512': '🟢',
-                    'mistralai-mistral-medium-3.1': '🔴',
-                    'moonshotai-kimi-k2': '🟢',
-                    'moonshotai-kimi-k2-0905': '🟢',
-                    'moonshotai-kimi-k2-thinking': '🟢',
-                    'openai-gpt-5': '🔴',
-                    'openai-gpt-5.1': '🔴',
-                    'openai-gpt-5-mini': '🔴',
-                    'openai-gpt-5-nano': '🔴',
-                    'openai-gpt-oss-120b': '🟢',
-                    'openai-gpt-oss-20b': '🟢',
-                    'qwen-qwen3-235b-a22b-thinking-2507': '🟢',
-                    'tencent-hunyuan-a13b-instruct': '🟢',
-                    'x-ai-grok-3-mini': '🔴',
-                    'x-ai-grok-4.1-fast': '🔴',
-                    'z-ai-glm-4-32b': '🟢',
-                    'z-ai-glm-4.5': '🟢'
-                };
-                return map[displayName] || '-';
-            }
-
-            function setColumnWidths() {
-                const table = document.getElementById('results-table');
-                if (!table || !table.tHead || !table.tHead.rows.length) return;
-                
-                const headerRow = table.tHead.rows[0];
-                const numColumns = headerRow.cells.length;
-                
-                // Fixed widths for first 3 columns: Model (25%), Average (6%), Open Weights (5%)
-                // Reduced widths to give more space to test columns while keeping table visible
-                const fixedWidths = [25, 6, 5];
-                const remainingWidth = 100 - fixedWidths.reduce((a, b) => a + b, 0); // 64%
-                
-                // Distribute remaining width among test columns (columns 4+)
-                const numTestColumns = numColumns - 3;
-                const testColumnWidth = numTestColumns > 0 ? remainingWidth / numTestColumns : 0;
-                
-                // Set widths for all columns
-                for (let i = 0; i < numColumns; i++) {
-                    const width = i < 3 ? fixedWidths[i] : testColumnWidth;
-                    const style = `width: ${width}%`;
-                    headerRow.cells[i].style.cssText = style;
-                    // Apply to all body cells in this column
-                    const tbody = table.tBodies[0];
-                    if (tbody) {
-                        Array.from(tbody.rows).forEach(row => {
-                            if (row.cells[i]) {
-                                row.cells[i].style.cssText = style;
-                            }
-                        });
-                    }
-                }
-            }
-
-            function buildTable(headers, rows) {
-                const table = document.getElementById('results-table');
-                const thead = table.tHead || table.createTHead();
-                const tbody = table.tBodies[0] || table.createTBody();
-                thead.innerHTML = '';
-                tbody.innerHTML = '';
-
-                // Determine test columns by pairing *_points with *_total
-                const pointCols = headers.filter(h => h.endsWith('_points'));
-                const tests = pointCols.map(pc => pc.replace(/_points$/, ''))
-                    .filter(id => headers.includes(id + '_total'));
-                
-                // Add dummy "thinking" test column
-                tests.push('thinking');
-
-                const hasOpenWeights = headers.includes('open_weights');
-
-                // Build header row: Model | Average | Open Weights | each test
-                const hdrRow = document.createElement('tr');
-                const hdrs = ['Model', 'Average', 'Open Weights', ...tests.map(humanizeTest)];
-                hdrs.forEach((label, idx) => {
-                    const th = document.createElement('th');
-                    th.textContent = label;
-                    // THINKING column should be centered like Open Weights, not numeric
-                    if (label === 'THINKING') {
-                        // Don't add 'num' class, keep centered
-                    } else if (idx === 1 || idx >= 3) {
-                        th.classList.add('num'); // numeric columns
-                    }
-                    th.addEventListener('click', () => sortTable(idx));
-                    hdrRow.appendChild(th);
-                });
-                thead.appendChild(hdrRow);
-
-                // Build body rows
-                rows.forEach(r => {
-                    const obj = Object.fromEntries(headers.map((h, i) => [h, r[i]]));
-                    const model = displayModelName(obj['sampled_model_name']);
-                    
-                    // Pre-generate random icon for "thinking" column to ensure consistency
-                    let thinkingIcon = null;
-                    if (tests.includes('thinking')) {
-                        // Randomly assign red or green icon
-                        thinkingIcon = Math.random() > 0.5 ? '🔴' : '🟢';
-                    }
-                    
-                    // Compute ratios and average (excluding thinking column)
-                    const ratios = tests.map(id => {
-                        // Skip thinking column in ratio calculation
-                        if (id === 'thinking') {
-                            return null; // Don't include in average
-                        }
-                        const p = parseFloat(obj[id + '_points']);
-                        const t = parseFloat(obj[id + '_total']);
-                        if (!Number.isFinite(p) || !Number.isFinite(t) || t === 0) return null;
-                        return p / t;
-                    });
-                    const validRatios = ratios.filter(v => v !== null);
-                    const avg = validRatios.length ? validRatios.reduce((a, b) => a + b, 0) / validRatios.length : 0;
-
-                    const tr = document.createElement('tr');
-                    // Model
-                    const tdModel = document.createElement('td');
-                    tdModel.textContent = model;
-                    tr.appendChild(tdModel);
-                    // Average
-                    const tdAvg = document.createElement('td');
-                    tdAvg.textContent = avg.toFixed(2);
-                    tdAvg.classList.add('num');
-                    tdAvg.dataset.value = String(avg);
-                    tr.appendChild(tdAvg);
-                    // Open Weights
-                    const tdOpen = document.createElement('td');
-                    tdOpen.textContent = hasOpenWeights ? (obj['open_weights'] || 'Unknown') : getOpenWeights(model);
-                    tr.appendChild(tdOpen);
-                    // Tests
-                    tests.forEach((id, i) => {
-                        const td = document.createElement('td');
-                        const ratio = ratios[i];
-                        // Handle dummy "thinking" column with red/green icons
-                        if (id === 'thinking') {
-                            td.textContent = thinkingIcon;
-                            td.setAttribute('data-thinking', 'true'); // Mark for CSS centering
-                        } else {
-                            const pStr = obj[id + '_points'];
-                            const tStr = obj[id + '_total'];
-                            if (ratio === null) {
-                                td.textContent = '-';
-                            } else {
-                                td.textContent = `${pStr}/${tStr}`;
-                                td.dataset.ratio = String(ratio);
-                            }
-                            td.classList.add('num');
-                        }
-                        tr.appendChild(td);
-                    });
-                    tbody.appendChild(tr);
-                });
-
-                // After building, enable accessibility + sorting affordances
-                setupSorting();
-                // Set column widths dynamically
-                setColumnWidths();
-            }
-
-            function stableTestOrder(allKeys) {
-                const preferred = [
+                // C. TEST ORDER
+                // We want these specific tests to appear in this order after the fixed columns.
+                // Any new test found in the data that isn't listed here will be added
+                // automatically at the end, sorted alphabetically.
+                preferredTestOrder: [
                     '2024-10-20',
                     'kunskapsprov_apotekare_2024-01-23_del_a',
                     'kunskapsprov_audionomer_2023-10-17-teoretiskt-delprov',
                     'kunskapsprov_läkare_2024-11-26_mcq-140',
                     'kunskapsprov_tandläkare_TDL-2411',
-                    'matematik_och_fysikprovet',
-                ];
-                const set = new Set(allKeys);
-                const ordered = preferred.filter(k => set.has(k));
-                const rest = Array.from(set).filter(k => !preferred.includes(k)).sort();
-                return [...ordered, ...rest];
-            }
+                    'matematik_och_fysikprovet'
+                ],
 
-            function buildTableFromJson(items) {
-                const table = document.getElementById('results-table');
-                const thead = table.tHead || table.createTHead();
-                const tbody = table.tBodies[0] || table.createTBody();
-                thead.innerHTML = '';
-                tbody.innerHTML = '';
+                // D. SPECIAL TYPES
+                // If a column needs special handling (like an icon), define it here.
+                specialTypes: {}
+            };
 
-                // Determine union of test keys
-                const union = new Set();
-                items.forEach(obj => {
-                    Object.keys(obj).forEach(k => {
-                        if (k !== 'sampled_model_name' && k !== 'open_weights' && typeof obj[k] === 'object') {
-                            union.add(k);
-                        }
-                    });
-                });
-                const tests = stableTestOrder(Array.from(union));
-                // Add dummy "thinking" test column
-                tests.push('thinking');
-                const hasOpenWeights = items.some(x => typeof x.open_weights === 'string');
+            // --- 2. THE CHEF (Utilities) ---
 
-                // Header
-                const hdrRow = document.createElement('tr');
-                const hdrs = ['Model', 'Average', 'Open Weights', ...tests.map(humanizeTest)];
-                hdrs.forEach((label, idx) => {
-                    const th = document.createElement('th');
-                    th.textContent = label;
-                    // THINKING column should be centered like Open Weights, not numeric
-                    if (label === 'THINKING') {
-                        // Don't add 'num' class, keep centered
-                    } else if (idx === 1 || idx >= 3) {
-                        th.classList.add('num');
+            const Utils = {
+                // Turn "kunskapsprov_läkare..." into "Läkare"
+                getLabelForColumn(id) {
+                    // 1. Is it explicitly renamed in config?
+                    if (TABLE_CONFIG.columnLabels[id]) {
+                        return TABLE_CONFIG.columnLabels[id];
                     }
-                    th.addEventListener('click', () => sortTable(idx));
-                    hdrRow.appendChild(th);
-                });
-                thead.appendChild(hdrRow);
 
-                // Rows
-                items.forEach(obj => {
-                    const model = displayModelName(obj['sampled_model_name'] || '');
-                    
-                    // Pre-generate random icon for "thinking" column to ensure consistency
-                    let thinkingIcon = null;
-                    if (tests.includes('thinking')) {
-                        // Randomly assign red or green icon
-                        thinkingIcon = Math.random() > 0.5 ? '🔴' : '🟢';
-                    }
-                    
-                    const tr = document.createElement('tr');
-                    const tdModel = document.createElement('td');
-                    tdModel.textContent = model;
-                    tr.appendChild(tdModel);
+                    // 2. Otherwise, clean it up automatically
+                    return id
+                        .replaceAll('_', ' ')
+                        .replaceAll('-', ' ')
+                        .replace(/\b\d{4}-\d{2}-\d{2}\b/g, '') // Remove dates
+                        .replace(/\s+/g, ' ')                  // Collapse spaces
+                        .trim()
+                        .replace(/^\w/, (c) => c.toUpperCase()); // Capitalize first letter
+                },
 
-                    // Compute ratios (excluding thinking column)
-                    const ratios = tests.map(id => {
-                        // Skip thinking column in ratio calculation
-                        if (id === 'thinking') {
-                            return null; // Don't include in average
-                        }
-                        const entry = obj[id];
-                        if (!entry || typeof entry !== 'object') return null;
-                        const p = parseFloat(entry.points);
-                        const t = parseFloat(entry.total);
-                        if (!Number.isFinite(p) || !Number.isFinite(t) || t === 0) return null;
-                        return p / t;
+                // Clean up model names
+                formatModelName(rawName) {
+                    return (rawName || '').replaceAll('/', '-');
+                }
+            };
+
+            // --- 3. PREPARATION (Data Processing) ---
+            // Transforms raw JSON into a clean structure our renderer understands.
+
+            class ViewModelBuilder {
+                constructor(rawItems) {
+                    this.rawItems = rawItems;
+                }
+
+                build() {
+                    // Step 1: Figure out what columns we actually have in the data
+                    const dynamicTestKeys = this._discoverTestKeys();
+
+                    // Step 2: Combine Fixed Columns + Dynamic Test Columns
+                    // We start with the fixed ones defined in CONFIG
+                    const headers = [...TABLE_CONFIG.fixedColumns];
+
+                    // Then we add the discovered tests
+                    dynamicTestKeys.forEach(key => {
+                        headers.push({
+                            id: key,
+                            label: Utils.getLabelForColumn(key),
+                            // If it's the 'thinking' column, use icon type, otherwise it's a ratio (score/total)
+                            type: TABLE_CONFIG.specialTypes[key] || 'ratio',
+                            sortable: true
+                        });
                     });
-                    const valid = ratios.filter(v => v !== null);
-                    const avg = valid.length ? valid.reduce((a, b) => a + b, 0) / valid.length : 0;
 
-                    const tdAvg = document.createElement('td');
-                    tdAvg.textContent = avg.toFixed(2);
-                    tdAvg.classList.add('num');
-                    tdAvg.dataset.value = String(avg);
-                    tr.appendChild(tdAvg);
+                    // Step 3: Process every row to match these headers
+                    const rows = this.rawItems.map(item => this._processRow(item, headers));
 
-                    const tdOpen = document.createElement('td');
-                    tdOpen.textContent = hasOpenWeights && obj.open_weights ? obj.open_weights : getOpenWeights(model);
-                    tr.appendChild(tdOpen);
+                    return { headers, rows };
+                }
 
-                    tests.forEach((id, i) => {
-                        const td = document.createElement('td');
-                        const ratio = ratios[i];
-                        // Handle dummy "thinking" column with red/green icons
-                        if (id === 'thinking') {
-                            td.textContent = thinkingIcon;
-                            td.setAttribute('data-thinking', 'true'); // Mark for CSS centering
-                        } else {
-                            const entry = obj[id];
-                            if (!entry || typeof entry !== 'object') {
-                                td.textContent = '-';
-                            } else {
-                                const pStr = String(entry.points);
-                                const tStr = String(entry.total);
-                                td.textContent = `${pStr}/${tStr}`;
-                                if (ratio !== null) {
-                                    td.dataset.ratio = String(ratio);
-                                }
+                _discoverTestKeys() {
+                    if (!this.rawItems.length) return [];
+
+                    // Look at all items to find every possible test key
+                    const allKeysSet = new Set();
+                    this.rawItems.forEach(obj => {
+                        Object.keys(obj).forEach(k => {
+                            // Skip metadata keys
+                            if (['sampled_model_name', 'open_weights', 'thinking', 'average_score'].includes(k)) {
+                                return;
                             }
-                            td.classList.add('num');
-                        }
-                        tr.appendChild(td);
+
+                            // If it looks like a test result object (has 'points'), keep it
+                            if (typeof obj[k] === 'object' && obj[k] !== null && 'points' in obj[k]) {
+                                allKeysSet.add(k);
+                            }
+                        });
                     });
-                    tbody.appendChild(tr);
-                });
 
-                setupSorting();
-                // Set column widths dynamically
-                setColumnWidths();
-            }
+                    // Sort them according to our preferred order
+                    const keys = Array.from(allKeysSet);
+                    const preferred = TABLE_CONFIG.preferredTestOrder.filter(k => allKeysSet.has(k));
+                    const others = keys.filter(k => !TABLE_CONFIG.preferredTestOrder.includes(k)).sort();
 
-            function sortTable(n) {
-                const table = document.getElementById('results-table');
-                const tbody = table.tBodies[0];
-                const rows = Array.from(tbody.rows);
-                const ths = table.tHead.rows[0].cells;
-                const th = ths[n];
+                    return [...preferred, ...others];
+                }
 
-                const currentDir = th.classList.contains('sort-asc') ? 'asc' : th.classList.contains('sort-desc') ? 'desc' : 'none';
-                const dir = currentDir === 'asc' ? 'desc' : 'asc';
+                _processRow(item, headers) {
+                    const rowData = {
+                        cells: {}
+                    };
 
-                Array.from(ths).forEach(h => {
-                    h.classList.remove('sort-asc', 'sort-desc');
-                    h.setAttribute('aria-sort', 'none');
-                });
+                    headers.forEach(header => {
+                        const key = header.id;
+                        let cellValue = { display: '-', value: -1, classes: [] };
 
-                const getVal = (cell) => {
-                    // Prefer explicit data attributes when present
-                    if (cell.dataset && cell.dataset.ratio) {
-                        const v = parseFloat(cell.dataset.ratio);
-                        if (!Number.isNaN(v)) return v;
-                    }
-                    if (cell.dataset && cell.dataset.value) {
-                        const v = parseFloat(cell.dataset.value);
-                        if (!Number.isNaN(v)) return v;
-                    }
-                    const text = cell.textContent.trim();
-                    // Parse n / m pattern into a ratio
-                    const m = text.match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/);
-                    if (m) {
-                        const nVal = parseFloat(m[1]);
-                        const dVal = parseFloat(m[2]);
-                        if (Number.isFinite(nVal) && Number.isFinite(dVal) && dVal !== 0) {
-                            return nVal / dVal;
+                        // CASE A: Model Name
+                        if (key === 'model') {
+                            cellValue.display = Utils.formatModelName(item['sampled_model_name']);
+                            cellValue.value = cellValue.display;
                         }
-                    }
-                    const num = parseFloat(text);
-                    return Number.isNaN(num) ? text.toLowerCase() : num;
-                };
-
-                rows.sort((a, b) => {
-                    const x = getVal(a.cells[n]);
-                    const y = getVal(b.cells[n]);
-                    const isNum = typeof x === 'number' && typeof y === 'number';
-                    if (isNum) return dir === 'asc' ? x - y : y - x;
-                    return dir === 'asc' ? String(x).localeCompare(String(y)) : String(y).localeCompare(String(x));
-                });
-
-                rows.forEach(row => tbody.appendChild(row));
-                th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
-                th.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : 'descending');
-            }
-
-            function setupSorting() {
-                const table = document.getElementById('results-table');
-                if (!table) return;
-                const ths = table.querySelectorAll('thead th');
-                ths.forEach((th, idx) => {
-                    th.setAttribute('role', 'button');
-                    th.setAttribute('tabindex', '0');
-                    th.setAttribute('aria-sort', 'none');
-                    th.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            sortTable(idx);
+                        // CASE B: Average Score
+                        else if (key === 'average') {
+                            const val = item['average_score'] || 0;
+                            cellValue.display = val.toFixed(2);
+                            cellValue.value = val;
+                            cellValue.classes.push('num');
                         }
+                        // CASE C: Open Weights
+                        else if (key === 'open_weights') {
+                            cellValue.display = item['open_weights'] || '-';
+                            cellValue.value = cellValue.display;
+                        }
+                        // CASE D: Thinking (Special)
+                        else if (key === 'thinking') {
+                            const val = item['thinking'];
+                            cellValue.display = val || '-';
+                            cellValue.value = 0;
+                            if (val) {
+                                cellValue.isAttribute = true;
+                                cellValue.attrName = 'data-thinking';
+                                cellValue.attrValue = 'true';
+                            } else {
+                                cellValue.classes.push('num');
+                            }
+                        }
+                        // CASE E: Regular Test Result
+                        else {
+                            const entry = item[key];
+                            if (entry && typeof entry === 'object' && 'points' in entry) {
+                                const p = parseFloat(entry.points);
+                                const t = parseFloat(entry.total);
+                                if (Number.isFinite(p) && Number.isFinite(t) && t > 0) {
+                                    cellValue.display = `${p}/${t}`;
+                                    cellValue.value = p / t; // Ratio for sorting
+                                    cellValue.classes.push('num');
+                                } else {
+                                    cellValue.classes.push('num'); // Empty but numeric alignment
+                                }
+                            } else {
+                                cellValue.classes.push('num');
+                            }
+                        }
+
+                        rowData.cells[key] = cellValue;
                     });
-                });
-            }
 
-            // Sort by column n in descending order on first render
-            function initialSortDescending(n) {
-                const table = document.getElementById('results-table');
-                if (!table || !table.tHead || !table.tHead.rows.length) return;
-                const th = table.tHead.rows[0].cells[n];
-                if (!th) return;
-                // Mark as asc so our sorter flips to desc
-                th.classList.add('sort-asc');
-                sortTable(n);
-            }
-
-            async function tryLoadManifestAndRender() {
-                const res = await fetch('results/manifest.json', { cache: 'no-store' });
-                if (!res.ok) throw new Error('manifest missing');
-                const files = await res.json();
-                if (!Array.isArray(files) || !files.length) throw new Error('manifest empty');
-                // Fetch all grade JSONs in parallel
-                const texts = await Promise.all(files.map(f => fetch('results/' + f, { cache: 'no-store' }).then(r => {
-                    if (!r.ok) throw new Error('Failed to load ' + f);
-                    return r.text();
-                })));
-                const items = texts.map(t => JSON.parse(t));
-                buildTableFromJson(items);
-                initialSortDescending(1);
-            }
-
-            async function init() {
-                const table = document.getElementById('results-table');
-                const thead = table.tHead || table.createTHead();
-                const loadingRow = document.createElement('tr');
-                const loadingTh = document.createElement('th');
-                loadingTh.textContent = 'Loading...';
-                loadingTh.colSpan = 6;
-                loadingRow.appendChild(loadingTh);
-                thead.appendChild(loadingRow);
-
-                try {
-                    // Prefer manifest-based JSON loading; fallback to CSV
-                    try {
-                        await tryLoadManifestAndRender();
-                    } catch (_) {
-                        const res = await fetch('results/grades.csv', { cache: 'no-store' });
-                        if (!res.ok) throw new Error('Failed to load results/grades.csv');
-                        const text = await res.text();
-                        const rows = parseCSV(text).filter(r => r.length && r.some(x => x && x.trim() !== ''));
-                        if (rows.length < 2) throw new Error('No data in CSV');
-                        const headers = rows[0];
-                        const dataRows = rows.slice(1);
-                        buildTable(headers, dataRows);
-                        initialSortDescending(1);
-                        initialSortDescending(2);
-                    }
-                } catch (err) {
-                    thead.innerHTML = '';
-                    const tr = document.createElement('tr');
-                    const th = document.createElement('th');
-                    th.textContent = 'Could not load results. If opening as a local file, please serve via a web server.';
-                    tr.appendChild(th);
-                    thead.appendChild(tr);
-                    console.error(err);
+                    return rowData;
                 }
             }
 
-            document.addEventListener('DOMContentLoaded', init);
+            // --- 4. SERVING (Rendering) ---
+            // Takes the prepared View Model and draws it into the HTML table.
+
+            class TableRenderer {
+                constructor(tableId) {
+                    this.table = document.getElementById(tableId);
+                    if (!this.table) throw new Error(`Table with id ${tableId} not found`);
+                    this.thead = this.table.tHead || this.table.createTHead();
+                    this.tbody = this.table.tBodies[0] || this.table.createTBody();
+                }
+
+                render(viewModel) {
+                    this.clear();
+
+                    // 1. Draw Headers
+                    this._renderHead(viewModel.headers);
+
+                    // 2. Draw Body
+                    this._renderBody(viewModel.headers, viewModel.rows);
+
+                    // 3. Make sortable
+                    this._setupInteractions();
+
+                    // 4. Set column widths
+                    this._applyLayoutConfig(viewModel.headers);
+                }
+
+                clear() {
+                    this.thead.innerHTML = '';
+                    this.tbody.innerHTML = '';
+                }
+
+                _renderHead(headers) {
+                    const row = document.createElement('tr');
+                    headers.forEach((h, idx) => {
+                        const th = document.createElement('th');
+                        th.textContent = h.label;
+
+                        // Add class for specific styling (like numbers aligning right)
+                        if (h.type === 'number' || h.type === 'ratio') {
+                            th.classList.add('num');
+                        }
+
+                        // Accessibility & Sorting interactions
+                        th.setAttribute('role', 'button');
+                        th.setAttribute('tabindex', '0');
+                        th.dataset.colIndex = idx;
+
+                        row.appendChild(th);
+                    });
+                    this.thead.appendChild(row);
+                }
+
+                _renderBody(headers, rows) {
+                    rows.forEach(row => {
+                        const tr = document.createElement('tr');
+
+                        headers.forEach(h => {
+                            const td = document.createElement('td');
+                            const cellData = row.cells[h.id];
+
+                            td.textContent = cellData.display;
+
+                            // Apply CSS classes (e.g., 'num')
+                            if (cellData.classes) {
+                                cellData.classes.forEach(c => td.classList.add(c));
+                            }
+
+                            // Apply special attributes (like for the thinking icon)
+                            if (cellData.isAttribute) {
+                                td.setAttribute(cellData.attrName, cellData.attrValue);
+                            }
+
+                            // Store raw value for sorting
+                            td.dataset.value = cellData.value;
+
+                            tr.appendChild(td);
+                        });
+
+                        this.tbody.appendChild(tr);
+                    });
+                }
+
+                _setupInteractions() {
+                    const ths = this.thead.querySelectorAll('th');
+                    ths.forEach(th => {
+                        const onClick = () => this.sort(parseInt(th.dataset.colIndex));
+                        th.addEventListener('click', onClick);
+                        th.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                onClick();
+                            }
+                        });
+                    });
+                }
+
+                _applyLayoutConfig(headers) {
+                    const headerRow = this.thead.rows[0];
+                    if (!headerRow) return;
+
+                    // Calculate total width used by fixed columns
+                    let usedWidth = 0;
+                    let fixedCount = 0;
+
+                    headers.forEach(h => {
+                        if (h.widthPercent) {
+                            usedWidth += h.widthPercent;
+                            fixedCount++;
+                        }
+                    });
+
+                    // Distribute remaining width among the dynamic test columns
+                    const remainingWidth = 100 - usedWidth;
+                    const dynamicCount = headers.length - fixedCount;
+                    const dynamicWidth = dynamicCount > 0 ? (remainingWidth / dynamicCount) : 0;
+
+                    // Apply widths
+                    headers.forEach((h, i) => {
+                        const width = h.widthPercent || dynamicWidth;
+                        const style = `width: ${width}%`;
+
+                        // Apply to header
+                        headerRow.cells[i].style.cssText = style;
+
+                        // Apply to all body cells in this column
+                        // (This is redundant if table-layout: fixed is used properly, 
+                        // but ensures consistency across browsers/modes)
+                        Array.from(this.tbody.rows).forEach(row => {
+                            if (row.cells[i]) row.cells[i].style.cssText = style;
+                        });
+                    });
+                }
+
+                sort(columnIndex) {
+                    const rows = Array.from(this.tbody.rows);
+                    const th = this.thead.rows[0].cells[columnIndex];
+                    const currentDir = th.classList.contains('sort-asc') ? 'asc' : th.classList.contains('sort-desc') ? 'desc' : 'none';
+                    const dir = currentDir === 'asc' ? 'desc' : 'asc'; // Toggle
+
+                    // Clear previous sort indicators
+                    Array.from(this.thead.querySelectorAll('th')).forEach(h => {
+                        h.classList.remove('sort-asc', 'sort-desc');
+                        h.setAttribute('aria-sort', 'none');
+                    });
+
+                    // Sort!
+                    rows.sort((a, b) => {
+                        // Extract values we stored in data-value
+                        const valA = parseFloat(a.cells[columnIndex].dataset.value);
+                        const valB = parseFloat(b.cells[columnIndex].dataset.value);
+
+                        // Compare (handling NaNs for safety, though mixed types shouldn't happen much)
+                        if (!isNaN(valA) && !isNaN(valB)) {
+                            return dir === 'asc' ? valA - valB : valB - valA;
+                        }
+
+                        // Fallback to text string comparison
+                        const textA = a.cells[columnIndex].textContent.trim();
+                        const textB = b.cells[columnIndex].textContent.trim();
+                        return dir === 'asc'
+                            ? textA.localeCompare(textB)
+                            : textB.localeCompare(textA);
+                    });
+
+                    // Update UI
+                    rows.forEach(r => this.tbody.appendChild(r));
+                    th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+                    th.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : 'descending');
+                }
+            }
+
+            // --- 5. START THE ENGINE (Bootstrap) ---
+
+            async function main() {
+                const renderer = new TableRenderer('results-table');
+
+                // Helper to show a simple message in the table
+                const showMessage = (msg) => {
+                    renderer.clear();
+                    const row = renderer.thead.insertRow();
+                    const th = document.createElement('th');
+                    th.textContent = msg;
+                    th.colSpan = 10; // Wide enough to span most tables
+                    row.appendChild(th);
+                };
+
+                showMessage('Loading results...');
+
+                try {
+                    const res = await fetch(TABLE_CONFIG.dataSource, { cache: 'no-store' });
+                    if (!res.ok) throw new Error('Data file missing');
+                    const items = await res.json();
+
+                    const builder = new ViewModelBuilder(items);
+                    const viewModel = builder.build();
+
+                    renderer.render(viewModel);
+
+                    // Default Sort: Average Score, Descending
+                    // We simply simulate a click or call sort. 
+                    // Index 1 is typically 'Average' in our config.
+                    const avgIndex = viewModel.headers.findIndex(h => h.id === 'average');
+                    if (avgIndex >= 0) {
+                        // Sort once to ASC, then again to DESC (default behavior of our sort toggle)
+                        // Or just force it. Let's just double toggle or hack it slightly for simplicity.
+                        const th = renderer.thead.rows[0].cells[avgIndex];
+                        th.classList.add('sort-asc'); // Set initial state so next click/sort goes to desc
+                        renderer.sort(avgIndex);
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    showMessage('Could not load results. Please ensure you are serving this file via a web server.');
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', main);
         </script>
 </body>
 
